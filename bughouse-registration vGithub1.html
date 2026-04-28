@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hawaii 2026 Bughouse State Championship — Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --white: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --red: #8b1a1a;
+    --green: #2d6a4f;
+    --green-light: #52b788;
+    --gray: #3a3a3a;
+    --gray-mid: #6b6b6b;
+    --gray-light: #c5c0b8;
+    --border: #2a2a2a;
+    --blue-dark: #1a3a5c;
+    --blue-mid: #2a5080;
+    --blue-light: #7aabff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+
+  }
+
+  /* ── HEADER ── */
+  header { border-bottom: 1px solid var(--border); padding: 2.5rem 4rem; position: relative; overflow: hidden; }
+  header::before { content: '♟'; position: absolute; right: 3rem; top: 50%; transform: translateY(-50%); font-size: 9rem; opacity: 0.04; pointer-events: none; }
+  .header-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gray-mid); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .header-tournament-name { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+  .header-tournament-name span { color: var(--gold); }
+  .header-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; margin-top: 0.5rem; }
+
+  /* ── LAYOUT ── */
+  main { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem; margin-top: 2.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-heading:first-of-type { margin-top: 0; }
+
+  /* ── TEAM NAME DISPLAY ── */
+  .team-name-display { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.2); border-radius: 3px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; min-height: 3.5rem; }
+  .team-name-display-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); white-space: nowrap; }
+  .team-name-display-value { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 0.02em; transition: all 0.2s; }
+  .team-name-display-value.empty { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; font-weight: 400; color: var(--gray); font-style: italic; letter-spacing: 0.05em; }
+
+  /* ── PLAYER CARD ── */
+  .player-card {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  .player-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--border);
+  }
+  .player-card-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .player-card-title .board-num {
+    width: 1.4rem; height: 1.4rem;
+    background: var(--gold); color: var(--black);
+    border-radius: 50%;
+    font-size: 0.65rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .alternate-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray-mid);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.5rem; border-radius: 2px;
+  }
+  .player-card-body { padding: 1.25rem; }
+
+  /* ── FORM GRID ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.1rem; }
+  .form-grid .col-2 { grid-column: span 2; }
+  .form-grid .col-3 { grid-column: 1 / -1; }
+
+  /* ── FIELD ── */
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light); }
+  .field label .req { color: var(--gold); margin-left: 0.2rem; }
+  .field label .opt { color: var(--gray-mid); margin-left: 0.3rem; font-size: 0.6rem; }
+  .field input, .field select {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 300;
+    padding: 0.75rem 1rem;
+    border-radius: 2px; outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .field input::placeholder { color: var(--gray); }
+  .field select option { background: #1a1a1a; }
+  .field input.invalid, .field select.invalid { border-color: var(--red) !important; }
+  .field-error { font-size: 0.7rem; color: var(--red); font-family: 'IBM Plex Mono', monospace; display: none; }
+  .field-error.visible { display: block; }
+
+  /* Alternate section styling */
+  .player-card.alternate { border-color: #222; }
+  .player-card.alternate .player-card-header { background: rgba(255,255,255,0.01); }
+  .player-card.alternate .player-card-title { color: var(--gray-mid); }
+  .player-card.alternate .player-card-title .board-num { background: var(--gray); color: var(--white); }
+  .player-card.alternate .field input { background: rgba(255,255,255,0.02); }
+
+  /* ── SUBMIT ── */
+  .submit-row { display: flex; justify-content: flex-end; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; align-items: center; }
+  .submit-note { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.05em; }
+  .btn-submit { background: var(--gold); color: var(--black); border: none; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2.5rem; cursor: pointer; border-radius: 2px; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+  .btn-submit:hover { background: var(--gold-light); }
+  .btn-submit:active { transform: scale(0.98); }
+
+  /* ── CONFIRMATION BOX ── */
+  #success-box { display: none; border: 1px solid var(--gold); border-radius: 4px; overflow: hidden; margin-top: 0; }
+  .success-header { background: var(--gold); color: var(--black); padding: 1rem 1.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; }
+  .success-body { padding: 2rem; background: rgba(201,168,76,0.04); }
+  .conf-number-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 0.4rem; }
+  .conf-number { font-family: 'IBM Plex Mono', monospace; font-size: 2.5rem; font-weight: 500; color: var(--gold); letter-spacing: 0.15em; margin-bottom: 1.5rem; }
+  .conf-step { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+  .conf-step-num { flex-shrink: 0; width: 1.5rem; height: 1.5rem; background: var(--gold); color: var(--black); border-radius: 50%; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 0.1rem; }
+  .conf-step-text { font-size: 0.875rem; color: var(--gray-light); line-height: 1.6; }
+  .conf-step-text strong { color: var(--white); font-weight: 500; }
+  .conf-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+  .btn-zeffy { display: inline-block; background: var(--green); color: var(--white); border: none; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem 2rem; cursor: pointer; border-radius: 2px; text-decoration: none; transition: background 0.2s; }
+  .btn-zeffy:hover { background: var(--green-light); color: var(--black); }
+  .btn-register-another { display: inline-block; margin-left: 1rem; background: none; border: 1px solid var(--border); color: var(--gray-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.9rem 1.5rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .btn-register-another:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── ADMIN BUTTON ── */
+  #admin-toggle-btn { position: fixed; bottom: 2rem; right: 2rem; background: var(--gray); color: var(--white); border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
+  #admin-toggle-btn:hover { background: var(--gold); color: var(--black); }
+
+  /* ── ADMIN PANEL ── */
+  #admin-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
+  #admin-panel.open { display: block; }
+  .admin-inner { background: #111; border: 1px solid var(--border); border-radius: 4px; max-width: 1400px; margin: 0 auto; padding: 2rem; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
+  .admin-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); }
+  .admin-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .export-group { display: flex; gap: 0.5rem; align-items: center; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 2px; }
+  .export-group-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-mid); white-space: nowrap; }
+
+  /* ── STATS BAR ── */
+  .stats-bar { display: flex; gap: 2rem; padding: 1rem 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 2px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+  .stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.4rem; font-weight: 500; }
+  .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-mid); }
+
+  /* ── ADMIN BUTTONS ── */
+  .btn-admin { border: none; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .btn-admin-gold { background: var(--gold); color: var(--black); }
+  .btn-admin-gold:hover { background: var(--gold-light); }
+  .btn-admin-green { background: var(--green); color: var(--white); }
+  .btn-admin-green:hover { background: var(--green-light); color: var(--black); }
+  .btn-admin-blue { background: var(--blue-dark); color: var(--blue-light); border: 1px solid var(--blue-mid); }
+  .btn-admin-blue:hover { background: var(--blue-mid); color: var(--white); }
+  .btn-admin-outline { background: none; border: 1px solid var(--border); color: var(--gray-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .btn-admin-outline:hover { border-color: var(--gray-mid); color: var(--white); }
+  .btn-admin-danger { background: none; border: 1px solid var(--red); color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+  .btn-admin-danger:hover { background: rgba(139,26,26,0.2); }
+
+  /* ── FILTER BAR ── */
+  .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .filter-btn { background: none; border: 1px solid var(--border); color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.9rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+  .filter-btn:hover:not(.active) { border-color: var(--gray-mid); color: var(--white); }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 0.65rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--gray-light); font-weight: 300; white-space: nowrap; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .td-team { color: var(--white); font-weight: 500; }
+  .td-mono { font-family: 'IBM Plex Mono', monospace; }
+  .td-dim { color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; }
+
+  /* ── BADGES ── */
+  .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-alt { background: rgba(255,255,255,0.06); color: var(--gray-light); }
+
+  /* ── PAID TOGGLE ── */
+  .paid-toggle { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.25rem 0.6rem; border-radius: 2px; border: 1px solid transparent; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; user-select: none; }
+  .paid-toggle.unpaid { background: rgba(200,80,80,0.12); border-color: rgba(200,80,80,0.3); color: #e07070; }
+  .paid-toggle.paid { background: rgba(82,183,136,0.12); border-color: rgba(82,183,136,0.3); color: var(--green-light); }
+  .paid-toggle:hover { opacity: 0.75; }
+  .paid-toggle::before { content: '●'; font-size: 0.5rem; }
+
+  /* ── EXPANDABLE PLAYERS ── */
+  .expand-btn { background: none; border: none; color: var(--blue-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; cursor: pointer; padding: 0; text-decoration: underline; }
+  .players-detail { display: none; margin-top: 0.5rem; }
+  .players-detail.open { display: block; }
+  .player-mini { font-size: 0.75rem; color: var(--gray-light); margin-bottom: 0.15rem; }
+  .player-mini .board-label { color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; margin-right: 0.4rem; }
+
+  #no-registrations { text-align: center; padding: 3rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gray-mid); letter-spacing: 0.1em; }
+
+  /* ── EDIT MODAL ── */
+  #edit-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 400; overflow: auto; padding: 2rem; }
+  #edit-modal.open { display: block; }
+  .edit-modal-inner { background: #141414; border: 1px solid var(--border); border-radius: 4px; max-width: 780px; margin: 0 auto; overflow: hidden; }
+  .edit-modal-header { background: rgba(201,168,76,0.08); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .edit-modal-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+  .edit-modal-conf { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gray-mid); letter-spacing: 0.1em; }
+  .edit-modal-body { padding: 1.5rem; }
+  .edit-section-heading { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem; margin-top: 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
+  .edit-section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .edit-section-heading:first-of-type { margin-top: 0; }
+  .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .edit-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.9rem; }
+  .edit-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .edit-field label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-light); }
+  .edit-field input, .edit-field select { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--white); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem; font-weight: 300; padding: 0.6rem 0.85rem; border-radius: 2px; outline: none; transition: border-color 0.2s, background 0.2s; width: 100%; }
+  .edit-field input:focus, .edit-field select:focus { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+  .edit-field input::placeholder { color: var(--gray); }
+  .edit-field select option { background: #1a1a1a; }
+  .edit-player-block { border: 1px solid var(--border); border-radius: 2px; padding: 0.9rem; margin-bottom: 0.75rem; }
+  .edit-player-block:last-child { margin-bottom: 0; }
+  .edit-player-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
+  .edit-player-label .board-num { width: 1.2rem; height: 1.2rem; background: var(--gold); color: var(--black); border-radius: 50%; font-size: 0.6rem; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+  .edit-player-label.alt-label .board-num { background: var(--gray); }
+  .edit-modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); background: rgba(255,255,255,0.01); display: flex; justify-content: flex-end; gap: 0.75rem; align-items: center; }
+  .edit-save-msg { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--green-light); letter-spacing: 0.08em; opacity: 0; transition: opacity 0.3s; }
+  .edit-save-msg.show { opacity: 1; }
+  .btn-edit { background: none; border: 1px solid var(--border); color: var(--blue-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  .btn-edit:hover { border-color: var(--blue-light); background: rgba(122,171,255,0.08); }
+  .btn-delete { background: none; border: 1px solid rgba(139,26,26,0.5); color: #e07070; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; margin-right: auto; }
+  .btn-delete:hover { border-color: var(--red); background: rgba(139,26,26,0.15); }
+
+  /* ── PUBLIC ROSTER BUTTON ── */
+  #roster-toggle-btn { position: fixed; bottom: 2rem; left: 2rem; background: var(--blue-dark); color: var(--blue-light); border: 1px solid var(--blue-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
+  #roster-toggle-btn:hover { background: var(--blue-mid); color: var(--white); }
+
+  /* ── PUBLIC ROSTER PANEL ── */
+  #roster-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
+  #roster-panel.open { display: block; }
+  .roster-inner { background: #111; border: 1px solid var(--border); border-radius: 4px; max-width: 860px; margin: 0 auto; padding: 2rem; }
+  .roster-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 1rem; }
+  .roster-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); }
+  .roster-title span { color: var(--gold); }
+  .roster-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.1em; margin-bottom: 2rem; margin-top: 0.4rem; }
+  .roster-count { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; }
+  .roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .roster-card { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
+  .roster-card:hover { border-color: rgba(201,168,76,0.3); }
+  .roster-card-header { padding: 0.75rem 1rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .roster-team-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .roster-section-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); padding: 0.15rem 0.4rem; border-radius: 2px; }
+  .roster-card-body { padding: 0.75rem 1rem; }
+  .roster-player { display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .roster-player:last-child { border-bottom: none; }
+  .roster-player-board { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; color: var(--gray-mid); letter-spacing: 0.08em; margin-right: 0.5rem; flex-shrink: 0; }
+  .roster-player-name { font-size: 0.85rem; color: var(--gray-light); flex: 1; }
+  .roster-player-rating { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gold); }
+  .roster-player-rating.unrated { color: var(--gray-mid); }
+  .roster-team-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); width: 1.4rem; height: 1.4rem; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  #roster-empty { text-align: center; padding: 4rem 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gray-mid); letter-spacing: 0.1em; line-height: 2; }
+
+  /* ── LOADING OVERLAY ── */
+  #loading-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:1rem; }
+  #loading-overlay.show { display:flex; }
+  .loading-spinner { width:2rem; height:2rem; border:3px solid rgba(201,168,76,0.2); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; }
+  .loading-text { font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--gold); letter-spacing:0.1em; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .error-banner { background:rgba(139,26,26,0.15); border:1px solid var(--red); border-radius:2px; padding:0.75rem 1rem; margin-bottom:1.5rem; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:#e07070; display:none; }
+  .error-banner.show { display:block; }
+
+  /* ── TOAST ── */
+  #toast { position: fixed; bottom: 5rem; right: 2rem; background: var(--blue-dark); border: 1px solid var(--blue-mid); color: var(--blue-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.75rem 1.25rem; border-radius: 2px; z-index: 999; opacity: 0; transform: translateY(1rem); transition: all 0.3s; pointer-events: none; }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Roster note */
+  .roster-note {
+    font-size: 0.8rem;
+    color: var(--gray-mid);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    padding-left: 0.25rem;
+    border-left: 2px solid var(--border);
+    padding-left: 0.75rem;
+  }
+
+  /* USCF lookup link */
+  .uscf-lookup {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--blue-light);
+    text-decoration: none;
+    margin-top: 0.3rem;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+  }
+  .uscf-lookup:hover { opacity: 1; text-decoration: underline; }
+  .uscf-lookup::before { content: '↗'; font-size: 0.65rem; }
+  .field-with-lookup { display: flex; flex-direction: column; }
+
+  @media (max-width: 640px) {
+    header { padding: 1.5rem; }
+    .form-grid { grid-template-columns: 1fr !important; }
+    .form-grid .col-2, .form-grid .col-3 { grid-column: 1; }
+    .edit-grid { grid-template-columns: 1fr !important; }
+    .edit-grid-4 { grid-template-columns: 1fr 1fr !important; }
+    .conf-number { font-size: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     TOURNAMENT CONFIGURATION — update for each tournament
+     ════════════════════════════════════════════════════════ -->
+<script>
+const TOURNAMENT_CONFIG = {
+  // ── Display ─────────────────────────────────────────────
+  name:           "Hawaii 2026 Bughouse State Championship",
+  nameAccent:     "Bughouse State Championship",
+  startingDate:   "05/25/2026",
+  endingDate:     "05/25/2026",
+  displayDate:    "Monday, May 25, 2026",
+
+  // ── Zeffy ────────────────────────────────────────────────
+  zeffyURL:       "https://www.zeffy.com/en-US/ticketing/bughouse-state-championship--2026",
+
+  // ── Sections ─────────────────────────────────────────────
+  sections: [
+    { name: "Open", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: false },
+    // { name: "Scholastic", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: false },
+  ],
+
+  // ── Google Apps Script URL ──────────────────────────────────
+  scriptURL: "https://script.google.com/macros/s/AKfycbxfOR1TnHlv-C8jGGLXDHh-ugLMkJdITpAZXoK2qo6WL18QOpzM6sE7p9CorHLQw-7szg/exec",
+
+  // ── Admin Password ───────────────────────────────────────
+  adminPassword: "HCF2026",
+  tournamentKey: "bughouse", // do not change
+};
+</script>
+
+<!-- HEADER -->
+<header>
+  <div class="header-subtitle">Hawaii Chess Federation</div>
+  <div class="header-tournament-name" id="header-name"></div>
+  <div class="header-date" id="header-date"></div>
+</header>
+
+<!-- MAIN FORM -->
+<main>
+  <form id="reg-form" novalidate>
+
+    <!-- ── CONTACT INFO ── -->
+    <div class="section-heading">Contact Information</div>
+    <div class="form-grid">
+      <div class="field col-2">
+        <label>Contact Email <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="email address" autocomplete="email">
+        <div class="field-error" id="err-email">Valid email required</div>
+      </div>
+      <div class="field">
+        <label>Contact Phone</label>
+        <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label>Section <span class="req">*</span></label>
+        <select id="section">
+          <option value="">— Select —</option>
+        </select>
+        <div class="field-error" id="err-section">Please select a section</div>
+      </div>
+    </div>
+
+    <!-- ── PLAYER ROSTER ── -->
+    <div class="section-heading" style="margin-top:2.5rem">Your Pair</div>
+    <p class="roster-note">Enter both players below. Your team name will be generated automatically as a hyphenation of both last names.</p>
+
+    <!-- Player 1 -->
+    <div class="player-card">
+      <div class="player-card-header">
+        <div class="player-card-title"><div class="board-num">1</div>Player 1</div>
+      </div>
+      <div class="player-card-body">
+        <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr 1fr">
+          <div class="field">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="p1-first" placeholder="First name" autocomplete="given-name">
+            <div class="field-error" id="err-p1-first">Required</div>
+          </div>
+          <div class="field">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="p1-last" placeholder="Last name" autocomplete="family-name" oninput="updateTeamName()">
+            <div class="field-error" id="err-p1-last">Required</div>
+          </div>
+          <div class="field field-with-lookup">
+            <label>USCF ID <span class="req">*</span></label>
+            <input type="text" id="p1-uscf" placeholder="e.g. 12345678" maxlength="10">
+            <div class="field-error" id="err-p1-uscf">Required</div>
+            <a href="https://ratings.uschess.org/" target="_blank" rel="noopener" class="uscf-lookup">Look up USCF ID &amp; Rating</a>
+          </div>
+          <div class="field">
+            <label>Blitz Rating</label>
+            <input type="number" id="p1-rating" placeholder="e.g. 1450" min="100" max="3000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player 2 -->
+    <div class="player-card">
+      <div class="player-card-header">
+        <div class="player-card-title"><div class="board-num">2</div>Player 2</div>
+      </div>
+      <div class="player-card-body">
+        <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr 1fr">
+          <div class="field">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="p2-first" placeholder="First name" autocomplete="given-name">
+            <div class="field-error" id="err-p2-first">Required</div>
+          </div>
+          <div class="field">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="p2-last" placeholder="Last name" autocomplete="family-name" oninput="updateTeamName()">
+            <div class="field-error" id="err-p2-last">Required</div>
+          </div>
+          <div class="field field-with-lookup">
+            <label>USCF ID <span class="req">*</span></label>
+            <input type="text" id="p2-uscf" placeholder="e.g. 12345678" maxlength="10">
+            <div class="field-error" id="err-p2-uscf">Required</div>
+            <a href="https://ratings.uschess.org/" target="_blank" rel="noopener" class="uscf-lookup">Look up USCF ID &amp; Rating</a>
+          </div>
+          <div class="field">
+            <label>Blitz Rating</label>
+            <input type="number" id="p2-rating" placeholder="e.g. 1450" min="100" max="3000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Name Display -->
+    <div class="team-name-display">
+      <span class="team-name-display-label">Team Name</span>
+      <span class="team-name-display-value empty" id="team-name-display">Enter both last names above</span>
+    </div>
+
+        <!-- Submit -->
+    <div class="error-banner" id="submit-error"></div>
+    <div class="submit-row">
+      <span class="submit-note">Fields marked <span style="color:var(--gold)">*</span> are required</span>
+      <button type="submit" class="btn-submit">Submit Registration ♟</button>
+    </div>
+  </form>
+
+  <!-- Confirmation Box -->
+  <div id="success-box">
+    <div class="success-header">✓ Pair Registration Received</div>
+    <div class="success-body">
+      <div class="conf-number-label">Your Confirmation Number</div>
+      <div class="conf-number" id="conf-display">——————</div>
+      <div class="conf-step">
+        <div class="conf-step-num">1</div>
+        <div class="conf-step-text"><strong>Write down or copy your confirmation number above.</strong> You'll need it in the next step.</div>
+      </div>
+      <div class="conf-step">
+        <div class="conf-step-num">2</div>
+        <div class="conf-step-text">
+          Click the button below to pay your entry fee on Zeffy. When prompted, enter your confirmation number
+          <strong id="conf-inline">——————</strong> in the <em>"Confirmation Number (from registration form)"</em> field so we can match your payment to this registration.
+        </div>
+      </div>
+      <div class="conf-step">
+        <div class="conf-step-num">3</div>
+        <div class="conf-step-text">Once payment is confirmed, your registration will be marked <strong style="color:var(--green-light)">Paid</strong> and your team is all set!</div>
+      </div>
+      <div class="conf-divider"></div>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+        <a id="zeffy-btn" href="#" target="_blank" rel="noopener" class="btn-zeffy">Pay Entry Fee on Zeffy →</a>
+        <button type="button" class="btn-register-another" onclick="resetForm()">Register Another Pair</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Public Roster Button -->
+<button id="roster-toggle-btn" onclick="openRoster()">View Registered Teams</button>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loading-text">Saving registration...</div>
+</div>
+
+<!-- Admin Button -->
+<button id="admin-toggle-btn" onclick="openAdmin()">Admin Panel</button>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Edit Modal -->
+<div id="edit-modal">
+  <div class="edit-modal-inner">
+    <div class="edit-modal-header">
+      <span class="edit-modal-title">Edit Registration</span>
+      <span class="edit-modal-conf" id="edit-conf-label"></span>
+    </div>
+    <div class="edit-modal-body" id="edit-modal-body">
+      <!-- Populated dynamically -->
+    </div>
+    <div class="edit-modal-footer">
+      <button class="btn-delete" onclick="deleteRegistration()">Delete Registration</button>
+      <span class="edit-save-msg" id="edit-save-msg">✓ Saved</span>
+      <button class="btn-admin-outline" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-admin btn-admin-gold" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Public Roster Panel -->
+<div id="roster-panel">
+  <div class="roster-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem;">
+      <div>
+        <div class="roster-title">Registered <span>Pairs</span></div>
+        <div class="roster-subtitle" id="roster-subtitle">Loading...</div>
+      </div>
+      <button class="btn-admin-outline" onclick="closeRoster()">Close</button>
+    </div>
+    <div id="roster-grid" class="roster-grid"></div>
+    <div id="roster-empty" style="display:none">No teams have registered yet.<br>Be the first to sign up!</div>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="admin-panel">
+  <div class="admin-inner">
+    <div class="admin-header">
+      <div class="admin-title">Pair Registrations</div>
+      <div class="admin-actions">
+        <div class="export-group">
+          <span class="export-group-label">SwissSys:</span>
+          <button class="btn-admin btn-admin-blue" onclick="exportSJSON('all')">Export All → SJSON</button>
+          <button class="btn-admin btn-admin-blue" onclick="exportSJSON('paid')">Export Paid → SJSON</button>
+        </div>
+        <div class="export-group">
+          <span class="export-group-label">CSV:</span>
+          <button class="btn-admin btn-admin-gold" onclick="exportCSV('all')">All</button>
+          <button class="btn-admin btn-admin-green" onclick="exportCSV('paid')">Paid Only</button>
+        </div>
+        <button class="btn-admin-danger" onclick="clearAll()">Clear All</button>
+        <button class="btn-admin-outline" onclick="closeAdmin()">Close</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-value" style="color:var(--gold)" id="stat-total">0</div><div class="stat-label">Pairs</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:var(--green-light)" id="stat-paid">0</div><div class="stat-label">Paid</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:#e07070" id="stat-unpaid">0</div><div class="stat-label">Unpaid</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:var(--gray-light)" id="stat-players">0</div><div class="stat-label">Total Players</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('paid',this)">Paid</button>
+      <button class="filter-btn" onclick="setFilter('unpaid',this)">Unpaid</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div id="no-registrations">No registrations yet.</div>
+      <table id="reg-table" style="display:none">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Conf #</th>
+            <th>Payment</th>
+            <th>Team Name</th>
+            <th>Section</th>
+            <th>Contact Email</th>
+            <th>Phone</th>
+            <th>Players & Ratings</th>
+            <th>Registered At</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="reg-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+let activeFilter = 'all';
+let registrations = []; // loaded from Google Sheets
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+(function init() {
+  const cfg = TOURNAMENT_CONFIG;
+
+  // Header
+  const full = cfg.name, accent = cfg.nameAccent;
+  const idx = full.indexOf(accent);
+  const nameEl = document.getElementById('header-name');
+  if (idx >= 0) {
+    nameEl.innerHTML = escHtml(full.slice(0, idx)) + '<span>' + escHtml(accent) + '</span>' + escHtml(full.slice(idx + accent.length));
+  } else {
+    nameEl.textContent = full;
+  }
+  document.getElementById('header-date').textContent = cfg.displayDate;
+  document.title = cfg.name + ' — Registration';
+
+  // Sections dropdown
+  const sel = document.getElementById('section');
+  cfg.sections.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.name; opt.textContent = s.name;
+    sel.appendChild(opt);
+  });
+})();
+
+// ── Team name auto-generation ──
+function updateTeamName() {
+  const last1 = v('p1-last'), last2 = v('p2-last');
+  const display = document.getElementById('team-name-display');
+  if (last1 && last2) {
+    display.textContent = capitalize(last1) + '-' + capitalize(last2);
+    display.classList.remove('empty');
+  } else if (last1 || last2) {
+    display.textContent = last1 ? capitalize(last1) + '-' : '-' + capitalize(last2);
+    display.classList.add('empty');
+  } else {
+    display.textContent = 'Enter both last names above';
+    display.classList.add('empty');
+  }
+}
+function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+function getTeamName() {
+  const l1 = v('p1-last'), l2 = v('p2-last');
+  return (l1 && l2) ? capitalize(l1) + '-' + capitalize(l2) : '';
+}
+
+// ══════════════════════════════════════════════════════
+//  VALIDATION
+// ══════════════════════════════════════════════════════
+function validate() {
+  let ok = true;
+
+  // Contact fields
+  [{ id: 'email', err: 'err-email', type: 'email' },
+   { id: 'section', err: 'err-section' }
+  ].forEach(({ id, err, type }) => {
+    const el = document.getElementById(id);
+    const val = el.value.trim();
+    let valid = !!val;
+    if (type === 'email' && val) valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    el.classList.toggle('invalid', !valid);
+    document.getElementById(err).classList.toggle('visible', !valid);
+    if (!valid) ok = false;
+  });
+
+  // Both players
+  [1, 2].forEach(n => {
+    ['first', 'last', 'uscf'].forEach(field => {
+      const el = document.getElementById(`p${n}-${field}`);
+      const errEl = document.getElementById(`err-p${n}-${field}`);
+      const valid = !!el.value.trim();
+      el.classList.toggle('invalid', !valid);
+      errEl.classList.toggle('visible', !valid);
+      if (!valid) ok = false;
+    });
+  });
+
+  return ok;
+}
+
+// ══════════════════════════════════════════════════════
+//  SUBMIT
+// ══════════════════════════════════════════════════════
+document.getElementById('reg-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validate()) return;
+
+  const cfg = TOURNAMENT_CONFIG;
+  const conf = uniqueConf();
+
+  const players = [
+    { board: 1, first: v('p1-first'), last: v('p1-last'), uscf: v('p1-uscf'), rating: parseInt(v('p1-rating')) || 0, alt: false },
+    { board: 2, first: v('p2-first'), last: v('p2-last'), uscf: v('p2-uscf'), rating: parseInt(v('p2-rating')) || 0, alt: false },
+  ];
+
+  const entry = {
+    conf,
+    paid:      false,
+    team_name: getTeamName(),
+    section:   v('section'),
+    email:     v('email'),
+    phone:     v('phone'),
+    players,
+    timestamp: new Date().toLocaleString(),
+  };
+
+  showLoading('Saving registration...');
+  const errBanner = document.getElementById('submit-error');
+  errBanner.classList.remove('show');
+  try {
+    await saveRegistration(entry);
+    registrations.push(entry);
+  } catch(e) {
+    hideLoading();
+    errBanner.textContent = 'Registration could not be saved. Please check your connection and try again.';
+    errBanner.classList.add('show');
+    return;
+  }
+  hideLoading();
+
+  document.getElementById('conf-display').textContent = conf;
+  document.getElementById('conf-inline').textContent = conf;
+  document.getElementById('zeffy-btn').href = cfg.zeffyURL;
+  document.getElementById('reg-form').style.display = 'none';
+  document.getElementById('success-box').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function resetForm() {
+  document.getElementById('reg-form').reset();
+  document.getElementById('reg-form').style.display = 'block';
+  document.getElementById('success-box').style.display = 'none';
+  document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+  document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
+  updateTeamName();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════════
+//  GOOGLE SHEETS BACKEND
+// ══════════════════════════════════════════════════════
+const TOURNAMENT_KEY = TOURNAMENT_CONFIG.tournamentKey;
+
+async function apiCall(payload) {
+  const url = TOURNAMENT_CONFIG.scriptURL;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload),
+  });
+  return res.json();
+}
+
+async function loadRegistrations() {
+  try {
+    showLoading('Loading registrations...');
+    const url = TOURNAMENT_CONFIG.scriptURL + '?tournament=' + TOURNAMENT_KEY;
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (data.ok) {
+      registrations = data.registrations || [];
+    } else {
+      console.error('Failed to load:', data.error);
+    }
+  } catch(e) {
+    console.error('Load error:', e);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function saveRegistration(entry) {
+  const data = await apiCall({ action: 'submit', tournament: TOURNAMENT_KEY, registration: entry });
+  if (!data.ok) throw new Error(data.error || 'Save failed');
+}
+
+async function savePaidStatus(conf, paid) {
+  const data = await apiCall({ action: 'setPaid', tournament: TOURNAMENT_KEY, conf, paid });
+  if (!data.ok) throw new Error(data.error || 'Update failed');
+}
+
+async function saveEditToSheet(registration) {
+  const data = await apiCall({ action: 'edit', tournament: TOURNAMENT_KEY, registration });
+  if (!data.ok) throw new Error(data.error || 'Edit failed');
+}
+
+async function deleteFromSheet(conf) {
+  const data = await apiCall({ action: 'delete', tournament: TOURNAMENT_KEY, conf });
+  if (!data.ok) throw new Error(data.error || 'Delete failed');
+}
+
+function showLoading(msg) {
+  document.getElementById('loading-text').textContent = msg || 'Loading...';
+  document.getElementById('loading-overlay').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════════
+//  ADMIN
+// ══════════════════════════════════════════════════════
+async function openAdmin() {
+  if (sessionStorage.getItem('adminAuth') !== 'true') {
+    const entered = prompt('Enter admin password:');
+    if (entered === null) return;
+    if (entered === TOURNAMENT_CONFIG.adminPassword) {
+      sessionStorage.setItem('adminAuth', 'true');
+    } else {
+      alert('Incorrect password.');
+      return;
+    }
+  }
+  document.getElementById('admin-panel').classList.add('open');
+  showLoading('Loading registrations...');
+  await loadRegistrations();
+  hideLoading();
+  renderTable();
+}
+function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); }
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+function filteredRegs() {
+  if (activeFilter === 'paid')   return registrations.filter(r => r.paid);
+  if (activeFilter === 'unpaid') return registrations.filter(r => !r.paid);
+  return registrations;
+}
+
+function renderTable() {
+  const noReg = document.getElementById('no-registrations');
+  const table = document.getElementById('reg-table');
+  const tbody = document.getElementById('reg-tbody');
+  const paid  = registrations.filter(r => r.paid).length;
+  const totalPlayers = registrations.reduce((s, r) => s + r.players.length, 0);
+
+  document.getElementById('stat-total').textContent   = registrations.length;
+  document.getElementById('stat-paid').textContent    = paid;
+  document.getElementById('stat-unpaid').textContent  = registrations.length - paid;
+  document.getElementById('stat-players').textContent = totalPlayers;
+
+  const rows = filteredRegs();
+  if (!rows.length) {
+    noReg.style.display = 'block'; table.style.display = 'none';
+    noReg.textContent = registrations.length ? 'No entries match this filter.' : 'No registrations yet.';
+    return;
+  }
+  noReg.style.display = 'none'; table.style.display = 'table';
+
+  tbody.innerHTML = rows.map((r, i) => {
+    const gi = registrations.indexOf(r);
+    const required = r.players.filter(p => !p.alt);
+    const alt = r.players.find(p => p.alt);
+    const playerSummary = required.map(p => {
+      const ratingStr = p.rating > 0 ? ` <span style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:0.7rem">${p.rating}B</span>` : '';
+      return `<div class="player-mini"><span class="board-label">Bd ${p.board}</span>${escHtml(p.last)}, ${escHtml(p.first)} <span class="td-mono" style="color:var(--gray-mid)">${escHtml(p.uscf)}</span>${ratingStr}</div>`;
+    }).join('') + (alt ? `<div class="player-mini"><span class="board-label">Alt</span>${escHtml(alt.last)}, ${escHtml(alt.first)} <span class="badge badge-alt">alt</span></div>` : '');
+
+    return `<tr>
+      <td class="td-dim">${i+1}</td>
+      <td class="td-mono" style="color:var(--white);font-weight:500;letter-spacing:0.1em">${r.conf}</td>
+      <td><span class="paid-toggle ${r.paid?'paid':'unpaid'}" onclick="togglePaid(${gi})" title="Click to toggle">${r.paid?'Paid':'Unpaid'}</span></td>
+      <td class="td-team">${escHtml(r.team_name)}</td>
+      <td>${escHtml(r.section)}</td>
+      <td>${escHtml(r.email)}</td>
+      <td>${escHtml(r.phone) || '<span style="color:var(--gray)">—</span>'}</td>
+      <td><button class="expand-btn" onclick="togglePlayers(this)">show players ▾</button>
+          <div class="players-detail">${playerSummary}</div></td>
+      <td class="td-dim">${escHtml(r.timestamp)}</td>
+      <td><button class="btn-edit" onclick="openEditModal(${gi})">Edit</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function togglePlayers(btn) {
+  const detail = btn.nextElementSibling;
+  const open = detail.classList.toggle('open');
+  btn.textContent = open ? 'hide players ▴' : 'show players ▾';
+}
+
+async function togglePaid(idx) {
+  const conf = registrations[idx].conf;
+  const newPaid = !registrations[idx].paid;
+  registrations[idx].paid = newPaid;
+  renderTable();
+  try {
+    await savePaidStatus(conf, newPaid);
+  } catch(e) {
+    // Revert on failure
+    registrations[idx].paid = !newPaid;
+    renderTable();
+    toast('Error saving payment status — please try again.');
+  }
+}
+
+async function clearAll() {
+  if (!confirm('Delete all ' + registrations.length + ' registration(s)? This cannot be undone.')) return;
+  showLoading('Deleting all registrations...');
+  try {
+    // Delete each registration from Google Sheets one by one
+    for (const r of [...registrations]) {
+      await deleteFromSheet(r.conf);
+    }
+    registrations = [];
+    renderTable();
+    toast('All registrations deleted.');
+  } catch(e) {
+    toast('Error deleting registrations — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  SJSON EXPORT — SwissSys 11 Fixed-Roster Team Format
+// ══════════════════════════════════════════════════════
+function exportSJSON(filter) {
+  const data = filter === 'paid' ? registrations.filter(r => r.paid) : registrations;
+  if (!data.length) { alert('No entries to export.'); return; }
+
+  const cfg = TOURNAMENT_CONFIG;
+
+  const sections = cfg.sections.map(secCfg => {
+    const secRegs = data.filter(r => r.section === secCfg.name);
+
+    // Build team code map: team_name → unique 6-char code
+    const teamMap = {};
+    secRegs.forEach(r => {
+      if (!teamMap[r.team_name]) {
+        const raw = r.team_name.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        let code = raw.slice(0, 6).padEnd(6, 'X');
+        const used = Object.values(teamMap);
+        let n = 0;
+        while (used.includes(code)) { code = raw.slice(0, 4) + String(++n).padStart(2, '0'); }
+        teamMap[r.team_name] = code;
+      }
+    });
+
+    // Flatten all players across teams, sorted by team then board order
+    const allPlayers = [];
+    secRegs.forEach(r => {
+      r.players.forEach(p => {
+        allPlayers.push({ reg: r, player: p });
+      });
+    });
+    // Sort: required players first (by board), alternates last
+    allPlayers.sort((a, b) => {
+      if (a.player.alt !== b.player.alt) return a.player.alt ? 1 : -1;
+      return a.player.board - b.player.board;
+    });
+
+    const players = allPlayers.map((item, idx) => ({
+      "Pair number": idx + 1,
+      "Name": item.player.last + ', ' + item.player.first,
+      "ID": item.player.uscf,
+      "Rating": 0,
+      "Sex": "U",
+      "Email": item.reg.email || "",
+      "Phone": item.reg.phone || "",
+      "Team": teamMap[item.reg.team_name],
+      "Board order": item.player.board,
+      "Current result": " ",
+      "Results": []
+    }));
+
+    // Build Teams array with auto-calculated average rating
+    const teamsArray = Object.entries(teamMap).map(([fullName, code], idx) => {
+      const teamRegs = secRegs.filter(r => r.team_name === fullName);
+      // For team vs team, rating is average of required players
+      // (we don't have ratings here so default to 0 — SwissSys fills in from USCF)
+      return {
+        "Pair number": idx + 1,
+        "Full name": fullName,
+        "Team code": code,
+        "Rating": 0,
+        "Results": []
+      };
+    });
+
+    return {
+      "Section name":         secCfg.name,
+      "Type":                 2,          // 2 = fixed-roster team vs team
+      "Section title":        secCfg.name,
+      "Section time control": "",
+      "Number of players":    players.length,
+      "Number of teams":      teamsArray.length,
+      "Rounds paired":        0,
+      "Rounds played":        0,
+      "Rating to use":        0,  // SwissSys will use player ratings from USCF database update
+      "First board":          secCfg.firstBoard,
+      "Final round":          secCfg.finalRound,
+      "Team cut":             secCfg.teamCut,
+      "Acceleration":         0,
+      "Blitz":                secCfg.blitz,
+      "Pair table items":     0,
+      "Team pair table items": 0,
+      "Players":              players,
+      "Teams":                teamsArray,
+      "Prizes": { "Place prizes": [], "Class prizes": [] },
+      "Ladder": {}
+    };
+  });
+
+  const sjson = {
+    "Overview": {
+      "Program":         "SwissSys",
+      "Version":         11.46,
+      "Tournament title": cfg.name,
+      "Starting date":   cfg.startingDate,
+      "Ending date":     cfg.endingDate,
+      "Trace":           "7.11.0.0.0.0.0.0.0.0."
+    },
+    "Sections": sections
+  };
+
+  const suffix   = filter === 'paid' ? '_paid' : '_all';
+  const filename = cfg.name.replace(/[^a-zA-Z0-9_\-]/g, '_') + suffix + '_' + isoDate() + '.sjson';
+  const raw = JSON.stringify(sjson, null, 2)
+    .replace('"Version": 11.46', '"Version": 11.46000000000000085265128291212022304534912109375');
+
+  downloadText(raw, filename, 'application/json');
+  toast('SJSON exported — open in SwissSys via File → Open');
+}
+
+// ══════════════════════════════════════════════════════
+//  CSV EXPORT
+// ══════════════════════════════════════════════════════
+function exportCSV(filter) {
+  const data = filter === 'paid' ? registrations.filter(r => r.paid) : registrations;
+  if (!data.length) { alert('No entries to export.'); return; }
+
+  const headers = ['Conf #','Team Name','Section','Contact Email','Phone',
+    'P1 First','P1 Last','P1 USCF ID','P1 Blitz Rating',
+    'P2 First','P2 Last','P2 USCF ID','P2 Blitz Rating',
+    'Payment Status','Registered At'];
+
+  const rows = data.map(r => {
+    const p1 = r.players[0] || {};
+    const p2 = r.players[1] || {};
+    return [
+      r.conf, r.team_name, r.section, r.email, r.phone,
+      p1.first||'', p1.last||'', p1.uscf||'', p1.rating||'',
+      p2.first||'', p2.last||'', p2.uscf||'', p2.rating||'',
+      r.paid ? 'Paid' : 'Unpaid', r.timestamp
+    ].map(csvCell);
+  });
+
+  const csv = [headers.map(csvCell), ...rows].map(r => r.join(',')).join('\r\n');
+  const suffix = filter === 'paid' ? '_paid_only' : '_all';
+  downloadText(csv, 'team_registrations' + suffix + '_' + isoDate() + '.csv', 'text/csv;charset=utf-8;');
+}
+
+// ══════════════════════════════════════════════════════
+//  EDIT MODAL
+// ══════════════════════════════════════════════════════
+let editIdx = null; // global index of registration being edited
+
+function openEditModal(idx) {
+  editIdx = idx;
+  const r = registrations[idx];
+  const cfg = TOURNAMENT_CONFIG;
+
+  document.getElementById('edit-conf-label').textContent = 'Conf # ' + r.conf;
+
+  // Build sections options
+  const secOpts = cfg.sections.map(s =>
+    `<option value="${s.name}" ${r.section === s.name ? 'selected' : ''}>${s.name}</option>`
+  ).join('');
+
+  // Build player blocks
+  const required = r.players.filter(p => !p.alt);
+
+  const playerBlocks = required.map(p => `
+    <div class="edit-player-block">
+      <div class="edit-player-label">
+        <div class="board-num">${p.board}</div>
+        Board ${p.board}
+      </div>
+      <div class="edit-grid-4">
+        <div class="edit-field">
+          <label>First Name</label>
+          <input type="text" id="edit-p${p.board}-first" value="${escAttr(p.first)}" placeholder="First name">
+        </div>
+        <div class="edit-field">
+          <label>Last Name</label>
+          <input type="text" id="edit-p${p.board}-last" value="${escAttr(p.last)}" placeholder="Last name">
+        </div>
+        <div class="edit-field">
+          <label>USCF ID</label>
+          <input type="text" id="edit-p${p.board}-uscf" value="${escAttr(p.uscf)}" placeholder="e.g. 12345678" maxlength="10">
+        </div>
+        <div class="edit-field">
+          <label>Blitz Rating</label>
+          <input type="number" id="edit-p${p.board}-rating" value="${p.rating || ''}" placeholder="e.g. 1450" min="100" max="3000">
+        </div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('edit-modal-body').innerHTML = `
+    <div class="edit-section-heading">Team Information</div>
+    <div class="edit-grid">
+      <div class="edit-field">
+        <label>Team Name <span style="color:var(--gray-mid);font-size:0.55rem;font-family:'IBM Plex Sans',sans-serif;text-transform:none;letter-spacing:0"> — auto-generated from last names</span></label>
+        <input type="text" id="edit-team-name" value="${escAttr(r.team_name)}" placeholder="e.g. Smith-Jones">
+      </div>
+      <div class="edit-field">
+        <label>Section</label>
+        <select id="edit-section">${secOpts}</select>
+      </div>
+      <div class="edit-field">
+        <label>Contact Email</label>
+        <input type="email" id="edit-email" value="${escAttr(r.email)}" placeholder="email@example.com">
+      </div>
+      <div class="edit-field">
+        <label>Contact Phone</label>
+        <input type="tel" id="edit-phone" value="${escAttr(r.phone)}" placeholder="(808) 555-0100">
+      </div>
+    </div>
+
+    <div class="edit-section-heading">Players</div>
+    ${playerBlocks}
+  `;
+
+  document.getElementById('edit-save-msg').classList.remove('show');
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+  editIdx = null;
+}
+
+async function saveEdit() {
+  if (editIdx === null) return;
+  const r = registrations[editIdx];
+  const cfg = TOURNAMENT_CONFIG;
+
+  // Update team fields
+  r.team_name = ev('edit-team-name');
+  r.section   = ev('edit-section');
+  r.email     = ev('edit-email');
+  r.phone     = ev('edit-phone');
+
+  // Update required players
+  const required = r.players.filter(p => !p.alt);
+  required.forEach(p => {
+    p.first  = ev(`edit-p${p.board}-first`);
+    p.last   = ev(`edit-p${p.board}-last`);
+    p.uscf   = ev(`edit-p${p.board}-uscf`);
+    p.rating = parseInt(ev(`edit-p${p.board}-rating`)) || 0;
+  });
+
+  // No alternate for bughouse pairs
+
+  showLoading('Saving changes...');
+  try {
+    await saveEditToSheet(r);
+    renderTable();
+    const msg = document.getElementById('edit-save-msg');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2000);
+  } catch(e) {
+    toast('Error saving changes — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function deleteRegistration() {
+  if (editIdx === null) return;
+  const r = registrations[editIdx];
+  if (!confirm(`Delete registration for "${r.team_name}" (Conf # ${r.conf})? This cannot be undone.`)) return;
+  showLoading('Deleting...');
+  try {
+    await deleteFromSheet(r.conf);
+    registrations.splice(editIdx, 1);
+    renderTable();
+    closeEditModal();
+    toast('Registration deleted.');
+  } catch(e) {
+    toast('Error deleting registration — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+function ev(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function escAttr(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ══════════════════════════════════════════════════════
+//  PUBLIC ROSTER
+// ══════════════════════════════════════════════════════
+async function openRoster() {
+  document.getElementById('roster-panel').classList.add('open');
+  showLoading('Loading registered teams...');
+  await loadRegistrations();
+  hideLoading();
+  renderRoster();
+}
+function closeRoster() {
+  document.getElementById('roster-panel').classList.remove('open');
+}
+
+function renderRoster() {
+  const grid    = document.getElementById('roster-grid');
+  const empty   = document.getElementById('roster-empty');
+  const subtitle = document.getElementById('roster-subtitle');
+  const count   = registrations.length;
+
+  subtitle.textContent = count
+    ? count + ' team' + (count === 1 ? '' : 's') + ' registered — ' + TOURNAMENT_CONFIG.displayDate
+    : TOURNAMENT_CONFIG.displayDate;
+
+  if (!count) {
+    grid.style.display  = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  grid.style.display  = 'grid';
+  empty.style.display = 'none';
+
+  grid.innerHTML = registrations.map((r, i) => {
+    const required = r.players.filter(p => !p.alt);
+    const alt      = r.players.find(p => p.alt);
+
+    const playerRows = required.map(p => {
+      const name   = escHtml(p.first) + ' ' + escHtml(p.last);
+      const rating = p.rating && p.rating > 0
+        ? `<span class="roster-player-rating">${p.rating}<span style="font-size:0.6rem;opacity:0.7"> B</span></span>`
+        : `<span class="roster-player-rating unrated">—</span>`;
+      return `<div class="roster-player">
+        <span class="roster-player-board">Bd ${p.board}</span>
+        <span class="roster-player-name">${name}</span>
+        ${rating}
+      </div>`;
+    }).join('');
+
+    const altRow = alt ? `<div class="roster-player" style="opacity:0.6">
+        <span class="roster-player-board">Alt</span>
+        <span class="roster-player-name">${escHtml(alt.first)} ${escHtml(alt.last)}</span>
+        <span class="roster-player-rating unrated" style="font-size:0.6rem">alt</span>
+      </div>` : '';
+
+    return `<div class="roster-card">
+      <div class="roster-card-header">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <div class="roster-team-num">${i + 1}</div>
+          <div class="roster-team-name">${escHtml(r.team_name)}</div>
+        </div>
+        <span class="roster-section-badge">${escHtml(r.section)}</span>
+      </div>
+      <div class="roster-card-body">
+        ${playerRows}
+        ${altRow}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  UTILITIES
+// ══════════════════════════════════════════════════════
+function genConf() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c = '';
+  for (let i = 0; i < 6; i++) c += chars[Math.floor(Math.random() * chars.length)];
+  return c;
+}
+function uniqueConf() {
+  const used = new Set(registrations.map(r => r.conf));
+  let c; do { c = genConf(); } while (used.has(c));
+  return c;
+}
+function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+// save() replaced by Google Sheets backend
+function downloadText(content, filename, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+function isoDate() { return new Date().toISOString().slice(0, 10); }
+function escHtml(s) {
+  if (s == null || s === '') return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function csvCell(v) {
+  if (v == null || v === '') return '';
+  const s = String(v);
+  return (s.includes(',') || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
