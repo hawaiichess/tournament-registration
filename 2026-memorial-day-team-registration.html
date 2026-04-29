@@ -452,14 +452,15 @@ const TOURNAMENT_CONFIG = {
         <div class="field-error" id="err-email">Valid email required</div>
       </div>
       <div class="field">
-        <label>Contact Phone</label>
+        <label>Contact Phone <span class="req">*</span></label>
         <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
+        <div class="field-error" id="err-phone">Required</div>
       </div>
     </div>
 
     <!-- ── PLAYER ROSTER ── -->
     <div class="section-heading" style="margin-top:2.5rem">Player Roster</div>
-    <p class="roster-note">Board order will be determined by rating in descending order. The alternate will only play if one of the other team members is unavailable.</p>
+    <p class="roster-note">Board order will be determined by rating in descending order. Unrated players will be assigned to the lowest available board. The alternate will only play if one of the other team members is unavailable.</p>
 
     <!-- Players 1–4 (required) -->
     <div id="players-container"></div>
@@ -805,6 +806,7 @@ function validate() {
     { id: 'team-name', err: 'err-team-name' },
     { id: 'section',   err: 'err-section' },
     { id: 'email',     err: 'err-email', type: 'email' },
+    { id: 'phone',     err: 'err-phone' },
   ];
   teamChecks.forEach(({ id, err, type }) => {
     const el = document.getElementById(id);
@@ -857,6 +859,33 @@ function validate() {
       errBanner.classList.add('show');
       ok = false;
     }
+  }
+
+  // Duplicate USCF ID check
+  const ids = [];
+  const uscf1 = v('p1-uscf'); if (uscf1) ids.push({ id: uscf1.toUpperCase(), label: 'Board 1' });
+  const uscf2 = v('p2-uscf'); if (uscf2) ids.push({ id: uscf2.toUpperCase(), label: 'Board 2' });
+  const uscf3 = v('p3-uscf'); if (uscf3) ids.push({ id: uscf3.toUpperCase(), label: 'Board 3' });
+  const uscf4 = v('p4-uscf'); if (uscf4) ids.push({ id: uscf4.toUpperCase(), label: 'Board 4' });
+  if (altUscf) ids.push({ id: altUscf.toUpperCase(), label: 'Alternate' });
+  const seen = {};
+  const dupes = [];
+  ids.forEach(entry => {
+    if (seen[entry.id]) {
+      if (!dupes.includes(entry.id)) dupes.push(entry.id);
+    } else {
+      seen[entry.id] = entry.label;
+    }
+  });
+  if (dupes.length > 0) {
+    const dupeLabels = dupes.map(d => {
+      const matches = ids.filter(e => e.id === d).map(e => e.label);
+      return matches.join(' and ');
+    });
+    const errBanner = document.getElementById('submit-error');
+    errBanner.textContent = 'Duplicate USCF ID detected: ' + dupeLabels.join(', ') + ' have the same USCF ID. Please check and correct.';
+    errBanner.classList.add('show');
+    ok = false;
   }
 
   // Waiver checkbox
@@ -1366,7 +1395,7 @@ function openEditModal(idx) {
         <input type="email" id="edit-email" value="${escAttr(r.email)}" placeholder="email@example.com">
       </div>
       <div class="edit-field">
-        <label>Contact Phone</label>
+        <label>Contact Phone <span class="req">*</span></label>
         <input type="tel" id="edit-phone" value="${escAttr(r.phone)}" placeholder="(808) 555-0100">
       </div>
     </div>

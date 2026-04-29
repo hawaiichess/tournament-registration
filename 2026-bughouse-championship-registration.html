@@ -394,8 +394,8 @@ const TOURNAMENT_CONFIG = {
 
   // ── Sections ─────────────────────────────────────────────
   sections: [
-    { name: "Open", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: false },
-    // { name: "Scholastic", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: false },
+    { name: "Open", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: true },
+    // { name: "Scholastic", finalRound: 5, firstBoard: 1, teamCut: 2, blitz: true },
   ],
 
   // ── Google Apps Script URL ──────────────────────────────────
@@ -425,8 +425,9 @@ const TOURNAMENT_CONFIG = {
         <div class="field-error" id="err-email">Valid email required</div>
       </div>
       <div class="field">
-        <label>Contact Phone</label>
+        <label>Contact Phone <span class="req">*</span></label>
         <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
+        <div class="field-error" id="err-phone">Required</div>
       </div>
       <div class="field">
         <label>Section <span class="req">*</span></label>
@@ -738,7 +739,8 @@ function validate() {
 
   // Contact fields
   [{ id: 'email', err: 'err-email', type: 'email' },
-   { id: 'section', err: 'err-section' }
+   { id: 'section', err: 'err-section' },
+   { id: 'phone', err: 'err-phone' },
   ].forEach(({ id, err, type }) => {
     const el = document.getElementById(id);
     const val = el.value.trim();
@@ -760,6 +762,31 @@ function validate() {
       if (!valid) ok = false;
     });
   });
+
+  // Duplicate USCF ID check
+  const ids = [];
+  const uscf1 = v('p1-uscf'); if (uscf1) ids.push({ id: uscf1.toUpperCase(), label: 'Player 1' });
+  const uscf2 = v('p2-uscf'); if (uscf2) ids.push({ id: uscf2.toUpperCase(), label: 'Player 2' });
+
+  const seen = {};
+  const dupes = [];
+  ids.forEach(entry => {
+    if (seen[entry.id]) {
+      if (!dupes.includes(entry.id)) dupes.push(entry.id);
+    } else {
+      seen[entry.id] = entry.label;
+    }
+  });
+  if (dupes.length > 0) {
+    const dupeLabels = dupes.map(d => {
+      const matches = ids.filter(e => e.id === d).map(e => e.label);
+      return matches.join(' and ');
+    });
+    const errBanner = document.getElementById('submit-error');
+    errBanner.textContent = 'Duplicate USCF ID detected: ' + dupeLabels.join(', ') + ' have the same USCF ID. Please check and correct.';
+    errBanner.classList.add('show');
+    ok = false;
+  }
 
   // Waiver checkbox
   const waiver = document.getElementById('waiver-checkbox');
@@ -1239,7 +1266,7 @@ function openEditModal(idx) {
         <input type="email" id="edit-email" value="${escAttr(r.email)}" placeholder="email@example.com">
       </div>
       <div class="edit-field">
-        <label>Contact Phone</label>
+        <label>Contact Phone <span class="req">*</span></label>
         <input type="tel" id="edit-phone" value="${escAttr(r.phone)}" placeholder="(808) 555-0100">
       </div>
     </div>
