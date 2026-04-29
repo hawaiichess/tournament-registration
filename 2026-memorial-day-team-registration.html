@@ -406,8 +406,6 @@ const TOURNAMENT_CONFIG = {
   // Paste your Web App URL here after deploying the Apps Script.
   scriptURL: "https://script.google.com/macros/s/AKfycbxfOR1TnHlv-C8jGGLXDHh-ugLMkJdITpAZXoK2qo6WL18QOpzM6sE7p9CorHLQw-7szg/exec",
 
-  // ── Admin Password ───────────────────────────────────────
-  adminPassword: "HCF2026",
   tournamentKey: "memorial", // do not change
 };
 </script>
@@ -880,6 +878,9 @@ const TOURNAMENT_KEY = TOURNAMENT_CONFIG.tournamentKey;
 
 async function apiCall(payload) {
   const url = TOURNAMENT_CONFIG.scriptURL;
+  // Include admin password from session for all write operations
+  const pw = sessionStorage.getItem('adminPassword');
+  if (pw && payload.action !== 'submit') payload.password = pw;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain' },
@@ -941,10 +942,24 @@ async function openAdmin() {
   if (sessionStorage.getItem('adminAuth') !== 'true') {
     const entered = prompt('Enter admin password:');
     if (entered === null) return;
-    if (entered === TOURNAMENT_CONFIG.adminPassword) {
-      sessionStorage.setItem('adminAuth', 'true');
-    } else {
-      alert('Incorrect password.');
+    showLoading('Verifying password...');
+    try {
+      const result = await fetch(TOURNAMENT_CONFIG.scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'validatePassword', password: entered }),
+      }).then(r => r.json());
+      hideLoading();
+      if (result.ok) {
+        sessionStorage.setItem('adminAuth', 'true');
+        sessionStorage.setItem('adminPassword', entered);
+      } else {
+        alert('Incorrect password.');
+        return;
+      }
+    } catch(e) {
+      hideLoading();
+      alert('Could not verify password. Check your connection and try again.');
       return;
     }
   }
@@ -954,7 +969,15 @@ async function openAdmin() {
   hideLoading();
   renderTable();
 }
-function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); }
+function closeAdmin() {
+  document.getElementById('admin-panel').classList.remove('open');
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem('adminAuth');
+  sessionStorage.removeItem('adminPassword');
+  closeAdmin();
+}
 
 function setFilter(f, btn) {
   activeFilter = f;
@@ -1039,14 +1062,13 @@ async function clearAll() {
   if (!confirm('Delete all ' + registrations.length + ' registration(s)? This cannot be undone.')) return;
   showLoading('Deleting all registrations...');
   try {
-    for (const r of [...registrations]) {
-      await deleteFromSheet(r.conf);
-    }
+    const data = await apiCall({ action: 'clearAll', tournament: TOURNAMENT_KEY });
+    if (!data.ok) throw new Error(data.error || 'Clear failed');
     registrations = [];
     renderTable();
     toast('All registrations deleted.');
   } catch(e) {
-    toast('Error deleting registrations — please try again.');
+    toast('Error: ' + e.message);
   } finally {
     hideLoading();
   }
