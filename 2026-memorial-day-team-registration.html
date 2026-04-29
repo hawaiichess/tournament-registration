@@ -125,6 +125,16 @@
   .player-card.alternate .player-card-title .board-num { background: var(--gray); color: var(--white); }
   .player-card.alternate .field input { background: rgba(255,255,255,0.02); }
 
+  /* ── AVERAGE RATING DISPLAY ── */
+  .avg-rating-box { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.02); flex-wrap: wrap; gap: 0.75rem; }
+  .avg-rating-box.over-limit { border-color: rgba(139,26,26,0.5); background: rgba(139,26,26,0.05); }
+  .avg-rating-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); }
+  .avg-rating-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.6rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; }
+  .avg-rating-value.over-limit { color: #e07070; }
+  .avg-rating-value.empty { color: var(--gray); font-size: 1rem; font-style: italic; font-family: 'IBM Plex Sans', sans-serif; }
+  .avg-rating-limit { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.08em; margin-top: 0.3rem; }
+  .avg-rating-limit.over-limit { color: #e07070; }
+
   /* ── WAIVER ── */
   .waiver-section {
     margin-top: 2rem;
@@ -394,7 +404,7 @@ const TOURNAMENT_CONFIG = {
   //   teamCut    – players per team counted for team score
   //   blitz      – true / false
   sections: [
-    { name: "Open", finalRound: 5, firstBoard: 1, teamCut: 4, blitz: false },
+    { name: "Open", finalRound: 4, firstBoard: 1, teamCut: 4, blitz: false },
     // { name: "Reserve", finalRound: 5, firstBoard: 1, teamCut: 4, blitz: false },
   ],
 
@@ -487,20 +497,36 @@ const TOURNAMENT_CONFIG = {
     </div>
 
     <!-- Submit -->
+    <!-- ── AVERAGE TEAM RATING ── -->
+    <div class="avg-rating-box" id="avg-rating-box">
+      <div>
+        <div class="avg-rating-label">Average Team Rating</div>
+        <div class="avg-rating-limit" id="avg-rating-limit">Limit: 2000 USCF Quick</div>
+      </div>
+      <div class="avg-rating-value empty" id="avg-rating-value">No ratings entered</div>
+    </div>
+
     <div class="error-banner" id="submit-error"></div>
     <!-- ── WAIVER / MEDIA RELEASE ── -->
     <div class="waiver-section">
       <div class="waiver-text">
-        By submitting this registration, I confirm that I am authorized to register all players listed above,
-        and I grant the Hawaii Chess Federation permission to photograph, video record, and use images or
+        By submitting this registration, I confirm that I am authorized to register all players listed above.
+        I grant the Hawaii Chess Federation (HCF) permission to photograph, video record, and use images or
         likenesses of all registered participants — including minors — on our website, social media channels,
         and fundraising materials, without compensation. If any registered player is a minor, I confirm that
         I have authority to provide this consent on their behalf as a parent or legal guardian.
+        <br><br>
+        In consideration of participation in this event, I, on behalf of myself and all registered players,
+        hereby release, waive, and discharge the Hawaii Chess Federation, its officers, directors, volunteers,
+        and agents from any and all claims, demands, or causes of action arising out of or related to
+        participation in this event, including but not limited to personal injury, property damage, or loss,
+        whether caused by negligence or otherwise. I acknowledge that chess events involve inherent risks,
+        and I voluntarily assume all such risks on behalf of myself and any minors I am registering.
       </div>
       <label class="waiver-checkbox-row">
         <input type="checkbox" id="waiver-checkbox">
         <span class="waiver-checkbox-label">
-          I agree to the above media release on behalf of all registered participants.
+          I agree to the above media release and liability waiver on behalf of all registered participants.
           <span class="req">*</span>
         </span>
       </label>
@@ -721,11 +747,50 @@ function playerCardHTML(n, isAlt) {
         </div>
         <div class="field">
           <label>Quick Rating</label>
-          <input type="number" id="p${n}-rating" placeholder="e.g. 1450" min="100" max="3000">
+          <input type="number" id="p${n}-rating" placeholder="e.g. 1450" min="100" max="3000" oninput="updateAverageRating()">
         </div>
       </div>
     </div>
   </div>`;
+}
+
+// ══════════════════════════════════════════════════════
+//  AVERAGE RATING CALCULATOR
+// ══════════════════════════════════════════════════════
+function updateAverageRating() {
+  const cfg = TOURNAMENT_CONFIG;
+  const ratings = [];
+  for (let i = 1; i <= cfg.playersPerTeam; i++) {
+    const val = parseInt(document.getElementById(`p${i}-rating`)?.value || '') || 0;
+    if (val > 0) ratings.push(val);
+  }
+
+  const box   = document.getElementById('avg-rating-box');
+  const val   = document.getElementById('avg-rating-value');
+  const limit = document.getElementById('avg-rating-limit');
+
+  if (ratings.length === 0) {
+    val.textContent = 'No ratings entered';
+    val.className   = 'avg-rating-value empty';
+    box.classList.remove('over-limit');
+    limit.classList.remove('over-limit');
+    return;
+  }
+
+  const avg = Math.round(ratings.reduce((a, b) => a + b, 0) / ratings.length);
+  val.textContent = avg.toLocaleString();
+
+  if (avg >= 2000) {
+    val.className = 'avg-rating-value over-limit';
+    box.classList.add('over-limit');
+    limit.classList.add('over-limit');
+    limit.textContent = '⚠ Limit: 2000 USCF Quick — team exceeds limit';
+  } else {
+    val.className = 'avg-rating-value';
+    box.classList.remove('over-limit');
+    limit.classList.remove('over-limit');
+    limit.textContent = 'Limit: 2000 USCF Quick';
+  }
 }
 
 // ══════════════════════════════════════════════════════
@@ -775,6 +840,22 @@ function validate() {
       });
       ok = false;
       toast('If registering an alternate, all three alternate fields are required.');
+    }
+  }
+
+  // Average rating check
+  const ratingInputs = [];
+  for (let i = 1; i <= TOURNAMENT_CONFIG.playersPerTeam; i++) {
+    const val = parseInt(document.getElementById(`p${i}-rating`)?.value || '') || 0;
+    if (val > 0) ratingInputs.push(val);
+  }
+  if (ratingInputs.length > 0) {
+    const avg = Math.round(ratingInputs.reduce((a, b) => a + b, 0) / ratingInputs.length);
+    if (avg >= 2000) {
+      const errBanner = document.getElementById('submit-error');
+      errBanner.textContent = `Team average rating of ${avg.toLocaleString()} exceeds the 2000 USCF Quick limit. Please verify your ratings.`;
+      errBanner.classList.add('show');
+      ok = false;
     }
   }
 
@@ -1431,6 +1512,12 @@ function renderRoster() {
     const required = r.players.filter(p => !p.alt);
     const alt      = r.players.find(p => p.alt);
 
+    // Calculate average rating for display
+    const ratedPlayers = required.filter(p => p.rating > 0);
+    const avgRating = ratedPlayers.length > 0
+      ? Math.round(ratedPlayers.reduce((s, p) => s + p.rating, 0) / ratedPlayers.length)
+      : null;
+
     const playerRows = required.map(p => {
       const name   = escHtml(p.first) + ' ' + escHtml(p.last);
       const rating = p.rating && p.rating > 0
@@ -1449,6 +1536,13 @@ function renderRoster() {
         <span class="roster-player-rating unrated" style="font-size:0.6rem">alt</span>
       </div>` : '';
 
+    const avgDisplay = avgRating
+      ? `<div style="padding:0.5rem 1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+           <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-mid)">Avg Rating</span>
+           <span style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;color:var(--gold)">${avgRating.toLocaleString()} Q</span>
+         </div>`
+      : '';
+
     return `<div class="roster-card">
       <div class="roster-card-header">
         <div style="display:flex;align-items:center;gap:0.6rem;">
@@ -1461,6 +1555,7 @@ function renderRoster() {
         ${playerRows}
         ${altRow}
       </div>
+      ${avgDisplay}
     </div>`;
   }).join('');
 }
