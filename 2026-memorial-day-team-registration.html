@@ -493,10 +493,17 @@ const TOURNAMENT_CONFIG = {
     <div class="section-heading" style="margin-top:2.5rem">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
     <div class="prize-category-grid">
       <label class="prize-option" onclick="togglePrize(this)">
+        <input type="checkbox" name="prize_category" value="University Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">University Team</span>
+          <span class="prize-option-desc">All players currently enrolled in a graduate or undergraduate program</span>
+        </div>
+      </label>
+      <label class="prize-option" onclick="togglePrize(this)">
         <input type="checkbox" name="prize_category" value="High School Team">
         <div class="prize-option-text">
           <span class="prize-option-name">High School Team</span>
-          <span class="prize-option-desc">All players in grades 9–12</span>
+          <span class="prize-option-desc">All players in grades 9–12, not necessarily at the same school</span>
         </div>
       </label>
       <label class="prize-option" onclick="togglePrize(this)">
@@ -528,13 +535,6 @@ const TOURNAMENT_CONFIG = {
         </div>
       </label>
       <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Women's Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Women's Team</span>
-          <span class="prize-option-desc">All female players</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
         <input type="checkbox" name="prize_category" value="Mixed Doubles">
         <div class="prize-option-text">
           <span class="prize-option-name">Mixed Doubles</span>
@@ -542,10 +542,10 @@ const TOURNAMENT_CONFIG = {
         </div>
       </label>
       <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Parents &amp; Kids">
+        <input type="checkbox" name="prize_category" value="Female Team">
         <div class="prize-option-text">
-          <span class="prize-option-name">Parents &amp; Kids</span>
-          <span class="prize-option-desc">Two parents and two children</span>
+          <span class="prize-option-name">Female Team</span>
+          <span class="prize-option-desc">All female players</span>
         </div>
       </label>
       <label class="prize-option" onclick="togglePrize(this)">
@@ -553,6 +553,27 @@ const TOURNAMENT_CONFIG = {
         <div class="prize-option-text">
           <span class="prize-option-name">Senior Team</span>
           <span class="prize-option-desc">All players age 50 or older</span>
+        </div>
+      </label>
+      <label class="prize-option" onclick="togglePrize(this)">
+        <input type="checkbox" name="prize_category" value="Military Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Military Team</span>
+          <span class="prize-option-desc">All players must be current or former U.S. armed forces service members</span>
+        </div>
+      </label>
+      <label class="prize-option" onclick="togglePrize(this)">
+        <input type="checkbox" name="prize_category" value="Family Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Family Team</span>
+          <span class="prize-option-desc">All players must be members of the same family or household</span>
+        </div>
+      </label>
+      <label class="prize-option" onclick="togglePrize(this)">
+        <input type="checkbox" name="prize_category" value="Parents & Kids">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Parents & Kids</span>
+          <span class="prize-option-desc">Two parents and two children, can be from the same or different families</span>
         </div>
       </label>
     </div>
@@ -1556,66 +1577,87 @@ function openEditModal(idx) {
     <div class="edit-section-heading">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
     <div class="prize-category-grid" style="margin-bottom:0.5rem">
       <label class="prize-option" id="edit-prize-0" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="High School Team">
+        <input type="checkbox" name="edit-prize_category" value="University Team">
         <div class="prize-option-text">
-          <span class="prize-option-name">High School Team</span>
-          <span class="prize-option-desc">All players in grades 9–12</span>
+          <span class="prize-option-name">University Team</span>
+          <span class="prize-option-desc">All players currently enrolled in a graduate or undergraduate program</span>
         </div>
       </label>
       <label class="prize-option" id="edit-prize-1" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Middle School Team">
+        <input type="checkbox" name="edit-prize_category" value="High School Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">High School Team</span>
+          <span class="prize-option-desc">All players in grades 9–12, not necessarily at the same school</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-2" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Middle School Team">
         <div class="prize-option-text">
           <span class="prize-option-name">Middle School Team</span>
           <span class="prize-option-desc">All players in grades 6–8</span>
         </div>
       </label>
-      <label class="prize-option" id="edit-prize-2" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Elementary School Team">
+      <label class="prize-option" id="edit-prize-3" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Elementary School Team">
         <div class="prize-option-text">
           <span class="prize-option-name">Elementary School Team</span>
           <span class="prize-option-desc">All players in grades 3–6</span>
         </div>
       </label>
-      <label class="prize-option" id="edit-prize-3" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Primary School Team">
+      <label class="prize-option" id="edit-prize-4" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Primary School Team">
         <div class="prize-option-text">
           <span class="prize-option-name">Primary School Team</span>
           <span class="prize-option-desc">All players in grades K–3</span>
         </div>
       </label>
-      <label class="prize-option" id="edit-prize-4" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Young'uns">
+      <label class="prize-option" id="edit-prize-5" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Young\'uns">
         <div class="prize-option-text">
           <span class="prize-option-name">Young'uns</span>
           <span class="prize-option-desc">All players age 6 or younger</span>
         </div>
       </label>
-      <label class="prize-option" id="edit-prize-5" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Women's Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Women's Team</span>
-          <span class="prize-option-desc">All female players</span>
-        </div>
-      </label>
       <label class="prize-option" id="edit-prize-6" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Mixed Doubles">
+        <input type="checkbox" name="edit-prize_category" value="Mixed Doubles">
         <div class="prize-option-text">
           <span class="prize-option-name">Mixed Doubles</span>
           <span class="prize-option-desc">Two male and two female players</span>
         </div>
       </label>
       <label class="prize-option" id="edit-prize-7" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Parents & Kids">
+        <input type="checkbox" name="edit-prize_category" value="Female Team">
         <div class="prize-option-text">
-          <span class="prize-option-name">Parents & Kids</span>
-          <span class="prize-option-desc">Two parents and two children</span>
+          <span class="prize-option-name">Female Team</span>
+          <span class="prize-option-desc">All female players</span>
         </div>
       </label>
       <label class="prize-option" id="edit-prize-8" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit_prize_category" value="Senior Team">
+        <input type="checkbox" name="edit-prize_category" value="Senior Team">
         <div class="prize-option-text">
           <span class="prize-option-name">Senior Team</span>
           <span class="prize-option-desc">All players age 50 or older</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-9" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Military Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Military Team</span>
+          <span class="prize-option-desc">All players must be current or former U.S. armed forces service members</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-10" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Family Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Family Team</span>
+          <span class="prize-option-desc">All players must be members of the same family or household</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-11" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit-prize_category" value="Parents & Kids">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Parents & Kids</span>
+          <span class="prize-option-desc">Two parents and two children, can be from the same or different families</span>
         </div>
       </label>
     </div>
