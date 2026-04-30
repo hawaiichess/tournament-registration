@@ -859,6 +859,12 @@ function playerCardHTML(n, isAlt) {
 // ══════════════════════════════════════════════════════
 //  PRIZE CATEGORY TOGGLE
 // ══════════════════════════════════════════════════════
+function toggleEditPrize(label) {
+  setTimeout(() => {
+    label.classList.toggle('selected', label.querySelector('input').checked);
+  }, 0);
+}
+
 function togglePrize(label) {
   // Slight delay so checkbox state updates first
   setTimeout(() => {
@@ -1546,7 +1552,84 @@ function openEditModal(idx) {
         </div>
       </div>
     </div>
+
+    <div class="edit-section-heading">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
+    <div class="prize-category-grid" style="margin-bottom:0.5rem">
+      <label class="prize-option" id="edit-prize-0" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="High School Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">High School Team</span>
+          <span class="prize-option-desc">All players in grades 9–12</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-1" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Middle School Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Middle School Team</span>
+          <span class="prize-option-desc">All players in grades 6–8</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-2" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Elementary School Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Elementary School Team</span>
+          <span class="prize-option-desc">All players in grades 3–5</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-3" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Primary School Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Primary School Team</span>
+          <span class="prize-option-desc">All players in grades K–2</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-4" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Young'uns">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Young'uns</span>
+          <span class="prize-option-desc">All players age 6 or younger</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-5" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Women's Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Women's Team</span>
+          <span class="prize-option-desc">All female players</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-6" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Mixed Doubles">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Mixed Doubles</span>
+          <span class="prize-option-desc">Two male and two female players</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-7" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Parents & Kids">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Parents & Kids</span>
+          <span class="prize-option-desc">Two parents and two children</span>
+        </div>
+      </label>
+      <label class="prize-option" id="edit-prize-8" onclick="toggleEditPrize(this)">
+        <input type="checkbox" name="edit_prize_category" value="Senior Team">
+        <div class="prize-option-text">
+          <span class="prize-option-name">Senior Team</span>
+          <span class="prize-option-desc">All players age 50 or older</span>
+        </div>
+      </label>
+    </div>
+    <p class="prize-note">Select all categories this team is eligible for.</p>
   `;
+
+  // Pre-check any previously selected categories
+  const saved = r.prize_categories || [];
+  document.querySelectorAll('input[name="edit_prize_category"]').forEach(cb => {
+    if (saved.includes(cb.value)) {
+      cb.checked = true;
+      cb.closest('.prize-option').classList.add('selected');
+    }
+  });
 
   document.getElementById('edit-save-msg').classList.remove('show');
   document.getElementById('edit-modal').classList.add('open');
@@ -1563,10 +1646,12 @@ async function saveEdit() {
   const cfg = TOURNAMENT_CONFIG;
 
   // Update team fields
-  r.team_name = ev('edit-team-name');
-  r.section   = ev('edit-section');
-  r.email     = ev('edit-email');
-  r.phone     = ev('edit-phone');
+  r.team_name       = ev('edit-team-name');
+  r.section         = ev('edit-section');
+  r.email           = ev('edit-email');
+  r.phone           = ev('edit-phone');
+  r.prize_categories = Array.from(document.querySelectorAll('input[name="edit_prize_category"]:checked'))
+    .map(cb => cb.value);
 
   // Update required players
   const required = r.players.filter(p => !p.alt);
