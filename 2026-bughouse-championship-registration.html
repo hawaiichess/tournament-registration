@@ -193,8 +193,25 @@
   .btn-register-another:hover { border-color: var(--gold); color: var(--gold); }
 
   /* ── ADMIN BUTTON ── */
-  #admin-toggle-btn { position: fixed; bottom: 2rem; right: 2rem; background: var(--gray); color: var(--white); border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
-  #admin-toggle-btn:hover { background: var(--gold); color: var(--black); }
+  .admin-footer-btn {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 2rem 3rem;
+  }
+  #admin-toggle-btn {
+    background: var(--gray);
+    color: var(--gray-mid);
+    border: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  #admin-toggle-btn:hover { background: rgba(255,255,255,0.06); color: var(--white); }
 
   /* ── ADMIN PANEL ── */
   #admin-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
@@ -229,7 +246,8 @@
   .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
   .filter-btn { background: none; border: 1px solid var(--border); color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.9rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
   .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
-  .filter-btn:hover:not(.active) { border-color: var(--gray-mid); color: var(--white); }
+  .filter-btn.active-green { border-color: var(--green-light); color: var(--green-light); background: rgba(82,183,136,0.08); }
+  .filter-btn:hover:not(.active):not(.active-green) { border-color: var(--gray-mid); color: var(--white); }
 
   /* ── TABLE ── */
   .table-wrap { overflow-x: auto; }
@@ -293,27 +311,64 @@
   .btn-delete { background: none; border: 1px solid rgba(139,26,26,0.5); color: #e07070; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; margin-right: auto; }
   .btn-delete:hover { border-color: var(--red); background: rgba(139,26,26,0.15); }
 
-  /* ── PUBLIC ROSTER BUTTON ── */
-  #roster-toggle-btn { position: fixed; bottom: 2rem; left: 2rem; background: var(--blue-dark); color: var(--blue-light); border: 1px solid var(--blue-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
-  #roster-toggle-btn:hover { background: var(--blue-mid); color: var(--white); }
+  /* ── NAV BUTTONS ── */
+  .nav-buttons {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.01);
+  }
+  .nav-btn-roster {
+    background: var(--blue-dark);
+    color: var(--blue-light);
+    border: 1px solid var(--blue-mid);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn-roster:hover { background: var(--blue-mid); color: var(--white); }
+  .nav-btn-seeking {
+    background: var(--green);
+    color: var(--green-light);
+    border: 1px solid rgba(82,183,136,0.4);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn-seeking:hover { background: #3a8a65; color: var(--white); }
+  @media (max-width: 640px) {
+    .nav-buttons { padding: 0.75rem 1rem; flex-direction: column; }
+    .nav-btn-roster, .nav-btn-seeking { width: 100%; text-align: center; }
+  }
 
-  /* ── SOLO SEEKERS BUTTON ── */
-  #solo-seekers-btn { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: rgba(201,168,76,0.08); color: var(--gold); border: 1px solid rgba(201,168,76,0.35); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; white-space: nowrap; }
-  #solo-seekers-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
-
-  /* ── SOLO SEEKERS PANEL ── */
-  #solo-seekers-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
-  #solo-seekers-panel.open { display: block; }
-  .solo-seekers-inner { background: #111; border: 1px solid var(--border); border-radius: 4px; max-width: 860px; margin: 0 auto; padding: 2rem; }
-  .solo-seekers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
-  .solo-seeker-card { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
-  .solo-seeker-card:hover { border-color: rgba(201,168,76,0.3); }
-  .solo-seeker-card-header { padding: 0.65rem 1rem; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .solo-seeker-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--white); }
-  .solo-seeker-card-body { padding: 0.65rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-  .solo-seeker-rating { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gold); }
-  .solo-seeker-rating.unrated { color: var(--gray-mid); font-style: italic; }
-  #solo-seekers-empty { text-align: center; padding: 4rem 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gray-mid); letter-spacing: 0.1em; line-height: 2; }
+  /* ── SEEKING PANEL ── */
+  #seeking-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
+  #seeking-panel.open { display: block; }
+  .seeking-inner { background: #111; border: 1px solid rgba(82,183,136,0.2); border-radius: 4px; max-width: 640px; margin: 0 auto; padding: 2rem; }
+  .seeking-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 0.35rem; }
+  .seeking-title span { color: var(--green-light); }
+  .seeking-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .seeking-note { font-size: 0.8rem; color: var(--gray-mid); font-style: italic; line-height: 1.6; margin-bottom: 1.5rem; padding: 0.75rem 1rem; border-left: 2px solid rgba(82,183,136,0.3); background: rgba(82,183,136,0.04); border-radius: 0 2px 2px 0; }
+  .seeking-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .seeking-card { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.1rem; border: 1px solid var(--border); border-radius: 3px; background: rgba(255,255,255,0.02); gap: 1rem; }
+  .seeking-name { font-size: 0.9rem; color: var(--white); font-weight: 400; }
+  .seeking-rating { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gold); }
+  .seeking-section { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-light); background: rgba(82,183,136,0.1); border: 1px solid rgba(82,183,136,0.2); padding: 0.15rem 0.4rem; border-radius: 2px; }
+  #seeking-empty { text-align: center; padding: 3rem 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gray-mid); letter-spacing: 0.1em; line-height: 2; }
+  /* (seeking panel styles above) */
 
   /* ── PUBLIC ROSTER PANEL ── */
   #roster-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
@@ -516,6 +571,12 @@ const TOURNAMENT_CONFIG = {
   <div class="header-tournament-name" id="header-name"></div>
   <div class="header-date" id="header-date"></div>
 </header>
+
+<!-- NAV BUTTONS -->
+<div class="nav-buttons">
+  <button class="nav-btn-roster" onclick="openRoster()">View Registered Pairs</button>
+  <button class="nav-btn-seeking" onclick="openSeeking()">Players Seeking Partners</button>
+</div>
 
 <!-- MAIN FORM -->
 <main>
@@ -819,12 +880,6 @@ const TOURNAMENT_CONFIG = {
 </div><!-- /#solo-reg-section -->
 </main>
 
-<!-- Public Roster Button -->
-<button id="roster-toggle-btn" onclick="openRoster()">View Registered Teams</button>
-
-<!-- Solo Seekers Button -->
-<button id="solo-seekers-btn" onclick="openSoloSeekers()">Players Seeking Partners</button>
-
 <!-- Loading Overlay -->
 <div id="loading-overlay">
   <div class="loading-spinner"></div>
@@ -832,7 +887,10 @@ const TOURNAMENT_CONFIG = {
 </div>
 
 <!-- Admin Button -->
-<button id="admin-toggle-btn" onclick="openAdmin()">Admin Panel</button>
+<!-- Admin button below the form -->
+<div class="admin-footer-btn">
+  <button id="admin-toggle-btn" onclick="openAdmin()">⚙ Admin Panel</button>
+</div>
 
 <!-- Toast -->
 <div id="toast"></div>
@@ -871,22 +929,22 @@ const TOURNAMENT_CONFIG = {
   </div>
 </div>
 
-<!-- Solo Seekers Panel -->
-<div id="solo-seekers-panel">
-  <div class="solo-seekers-inner">
+<!-- Players Seeking Partners Panel -->
+<div id="seeking-panel">
+  <div class="seeking-inner">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem;">
       <div>
-        <div class="roster-title">♙ Solo Players <span>Seeking Partners</span></div>
-        <div class="roster-subtitle" id="solo-seekers-subtitle">Loading...</div>
+        <div class="seeking-title">Players <span>Seeking Partners</span></div>
+        <div class="seeking-subtitle" id="seeking-subtitle">Loading...</div>
       </div>
-      <button class="btn-admin-outline" onclick="closeSoloSeekers()">Close</button>
+      <button class="btn-admin-outline" onclick="closeSeeking()">Close</button>
     </div>
-    <p style="font-size:0.8rem;color:var(--gray-mid);font-style:italic;margin-bottom:0;line-height:1.6;padding:0.75rem 1rem;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,0.01);">
+    <div class="seeking-note">
       These players have registered individually and are looking for a bughouse partner.
       If you'd like to pair up with someone below, contact the tournament director.
-    </p>
-    <div id="solo-seekers-grid" class="solo-seekers-grid"></div>
-    <div id="solo-seekers-empty" style="display:none">No solo players are currently seeking partners.<br>Check back later or register as a solo player above!</div>
+    </div>
+    <div class="seeking-list" id="seeking-list"></div>
+    <div id="seeking-empty" style="display:none">No solo players are currently seeking partners.<br>Check back later or register as a solo player above!</div>
   </div>
 </div>
 
@@ -2102,62 +2160,45 @@ function closeRoster() {
 }
 
 // ══════════════════════════════════════════════════════
-//  SOLO SEEKERS PUBLIC PANEL
+//  PLAYERS SEEKING PARTNERS
 // ══════════════════════════════════════════════════════
-async function openSoloSeekers() {
-  document.getElementById('solo-seekers-panel').classList.add('open');
-  showLoading('Loading solo players...');
+async function openSeeking() {
+  document.getElementById('seeking-panel').classList.add('open');
+  showLoading('Loading players seeking partners...');
   try {
     const res  = await fetch(`${TOURNAMENT_CONFIG.scriptURL}?tournament=bughouse&subtype=solo`);
     const data = await res.json();
-    renderSoloSeekers(data.solos || []);
-  } catch(e) {
-    renderSoloSeekers([]);
-  } finally {
-    hideLoading();
-  }
+    solos = data.solos || [];
+  } catch(e) { console.error(e); }
+  hideLoading();
+  renderSeeking();
 }
 
-function closeSoloSeekers() {
-  document.getElementById('solo-seekers-panel').classList.remove('open');
-}
+function closeSeeking() { document.getElementById('seeking-panel').classList.remove('open'); }
 
-function renderSoloSeekers(allSolos) {
-  const grid    = document.getElementById('solo-seekers-grid');
-  const empty   = document.getElementById('solo-seekers-empty');
-  const subtitle = document.getElementById('solo-seekers-subtitle');
+function renderSeeking() {
+  const list     = document.getElementById('seeking-list');
+  const empty    = document.getElementById('seeking-empty');
+  const subtitle = document.getElementById('seeking-subtitle');
+  const unpaired = solos.filter(s => !s.paired_with);
 
-  // Only show unpaired players
-  const unpaired = allSolos.filter(s => !s.paired_with);
-  const count    = unpaired.length;
+  subtitle.textContent = unpaired.length
+    ? unpaired.length + ' player' + (unpaired.length === 1 ? '' : 's') + ' currently seeking a partner'
+    : 'No players currently seeking a partner';
 
-  subtitle.textContent = count
-    ? count + ' player' + (count === 1 ? '' : 's') + ' seeking a partner — ' + TOURNAMENT_CONFIG.displayDate
-    : TOURNAMENT_CONFIG.displayDate;
-
-  if (!count) {
-    grid.style.display  = 'none';
-    empty.style.display = 'block';
-    return;
+  if (!unpaired.length) {
+    list.style.display = 'none'; empty.style.display = 'block'; return;
   }
-  grid.style.display  = 'grid';
-  empty.style.display = 'none';
+  list.style.display = 'flex'; empty.style.display = 'none';
 
-  grid.innerHTML = unpaired.map(s => {
-    const name   = escHtml(s.first_name) + ' ' + escHtml(s.last_name);
-    const rating = s.blitz_rating && s.blitz_rating > 0
-      ? `<span class="solo-seeker-rating">${s.blitz_rating} <span style="font-size:0.6rem;opacity:0.7">B</span></span>`
-      : `<span class="solo-seeker-rating unrated">Unrated</span>`;
-
-    return `<div class="solo-seeker-card">
-      <div class="solo-seeker-card-header">
-        <span class="solo-seeker-name">${name}</span>
-        <span class="roster-section-badge">${escHtml(s.section)}</span>
-      </div>
-      <div class="solo-seeker-card-body">
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--gray-mid);letter-spacing:0.08em;text-transform:uppercase;">Blitz Rating</span>
-        ${rating}
-      </div>
+  list.innerHTML = unpaired.map(s => {
+    const ratingStr = s.blitz_rating && s.blitz_rating > 0
+      ? `<span class="seeking-rating">${s.blitz_rating} B</span>`
+      : `<span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--gray-mid)">Unrated</span>`;
+    return `<div class="seeking-card">
+      <span class="seeking-name">${escHtml(s.first_name)} ${escHtml(s.last_name)}</span>
+      ${ratingStr}
+      <span class="seeking-section">${escHtml(s.section)}</span>
     </div>`;
   }).join('');
 }
