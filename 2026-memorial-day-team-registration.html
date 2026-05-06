@@ -29,7 +29,6 @@
     font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 300;
     min-height: 100vh;
-
   }
 
   /* ── HEADER ── */
@@ -40,8 +39,93 @@
   .header-tournament-name span { color: var(--gold); }
   .header-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; margin-top: 0.5rem; }
 
+  /* ── NAV BUTTONS (below header) ── */
+  .nav-buttons {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.01);
+  }
+  .nav-btn-roster {
+    background: var(--blue-dark);
+    color: var(--blue-light);
+    border: 1px solid var(--blue-mid);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn-roster:hover { background: var(--blue-mid); color: var(--white); }
+  .nav-btn-seeking {
+    background: var(--green);
+    color: var(--green-light);
+    border: 1px solid rgba(82,183,136,0.4);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn-seeking:hover { background: #3a8a65; color: var(--white); }
+  @media (max-width: 640px) {
+    .nav-buttons { padding: 0.75rem 1rem; flex-direction: column; }
+    .nav-btn-roster, .nav-btn-seeking { width: 100%; text-align: center; }
+  }
+
   /* ── LAYOUT ── */
-  main { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+  main { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+
+  /* ── REG MODE TOGGLE ── */
+  .reg-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .reg-mode-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--gray-mid);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .reg-mode-btn:last-child { border-right: none; }
+  .reg-mode-btn.active {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+  }
+  .reg-mode-btn:hover:not(.active) { color: var(--white); background: rgba(255,255,255,0.03); }
+  .reg-mode-desc {
+    font-size: 0.8rem;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: rgba(255,255,255,0.015);
+  }
 
   /* ── SECTION HEADING ── */
   .section-heading {
@@ -212,7 +296,7 @@
   .btn-submit:active { transform: scale(0.98); }
 
   /* ── CONFIRMATION BOX ── */
-  #success-box { display: none; border: 1px solid var(--gold); border-radius: 4px; overflow: hidden; margin-top: 0; }
+  #success-box, #solo-success-box { display: none; border: 1px solid var(--gold); border-radius: 4px; overflow: hidden; margin-top: 0; }
   .success-header { background: var(--gold); color: var(--black); padding: 1rem 1.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; }
   .success-body { padding: 2rem; background: rgba(201,168,76,0.04); }
   .conf-number-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 0.4rem; }
@@ -227,9 +311,26 @@
   .btn-register-another { display: inline-block; margin-left: 1rem; background: none; border: 1px solid var(--border); color: var(--gray-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.9rem 1.5rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
   .btn-register-another:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* ── ADMIN BUTTON ── */
-  #admin-toggle-btn { position: fixed; bottom: 2rem; right: 2rem; background: var(--gray); color: var(--white); border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
-  #admin-toggle-btn:hover { background: var(--gold); color: var(--black); }
+  /* ── ADMIN BUTTON (below form) ── */
+  .admin-footer-btn {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 2rem 3rem;
+  }
+  #admin-toggle-btn {
+    background: var(--gray);
+    color: var(--gray-mid);
+    border: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  #admin-toggle-btn:hover { background: rgba(255,255,255,0.06); color: var(--white); }
 
   /* ── ADMIN PANEL ── */
   #admin-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
@@ -264,7 +365,8 @@
   .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
   .filter-btn { background: none; border: 1px solid var(--border); color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.9rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
   .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
-  .filter-btn:hover:not(.active) { border-color: var(--gray-mid); color: var(--white); }
+  .filter-btn.active-green { border-color: var(--green-light); color: var(--green-light); background: rgba(82,183,136,0.08); }
+  .filter-btn:hover:not(.active):not(.active-green) { border-color: var(--gray-mid); color: var(--white); }
 
   /* ── TABLE ── */
   .table-wrap { overflow-x: auto; }
@@ -279,6 +381,8 @@
   /* ── BADGES ── */
   .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
   .badge-alt { background: rgba(255,255,255,0.06); color: var(--gray-light); }
+  .badge-paired { background: rgba(82,183,136,0.12); color: var(--green-light); border: 1px solid rgba(82,183,136,0.3); }
+  .badge-unpaired { background: rgba(201,168,76,0.08); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
 
   /* ── PAID TOGGLE ── */
   .paid-toggle { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.25rem 0.6rem; border-radius: 2px; border: 1px solid transparent; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.15s; user-select: none; }
@@ -295,6 +399,59 @@
   .player-mini .board-label { color: var(--gray-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; margin-right: 0.4rem; }
 
   #no-registrations { text-align: center; padding: 3rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gray-mid); letter-spacing: 0.1em; }
+
+  /* ── SOLO PAIRING ACTION BAR ── */
+  .pair-action-bar {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1rem;
+    background: rgba(82,183,136,0.07);
+    border: 1px solid rgba(82,183,136,0.25);
+    border-radius: 3px;
+    flex-wrap: wrap;
+  }
+  .pair-action-bar.visible { display: flex; }
+  .pair-action-names {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green-light);
+    flex: 1;
+    min-width: 200px;
+  }
+  .pair-team-input {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    padding: 0.5rem 0.85rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 220px;
+  }
+  .pair-team-input:focus { border-color: var(--green-light); }
+  .pair-team-input::placeholder { color: var(--gray); font-size: 0.8rem; }
+  .pair-action-warning {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #e0a050;
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+
+  /* ── SOLO CHECKBOX ── */
+  .solo-cb {
+    width: 1rem; height: 1rem;
+    accent-color: var(--green-light);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .solo-cb:disabled { opacity: 0.3; cursor: not-allowed; }
+  tr.solo-paired td { opacity: 0.45; }
 
   /* ── EDIT MODAL ── */
   #edit-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 400; overflow: auto; padding: 2rem; }
@@ -328,10 +485,6 @@
   .btn-delete { background: none; border: 1px solid rgba(139,26,26,0.5); color: #e07070; font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer; border-radius: 2px; transition: all 0.15s; margin-right: auto; }
   .btn-delete:hover { border-color: var(--red); background: rgba(139,26,26,0.15); }
 
-  /* ── PUBLIC ROSTER BUTTON ── */
-  #roster-toggle-btn { position: fixed; bottom: 2rem; left: 2rem; background: var(--blue-dark); color: var(--blue-light); border: 1px solid var(--blue-mid); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.6rem 1.1rem; cursor: pointer; border-radius: 2px; z-index: 100; transition: all 0.2s; }
-  #roster-toggle-btn:hover { background: var(--blue-mid); color: var(--white); }
-
   /* ── PUBLIC ROSTER PANEL ── */
   #roster-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
   #roster-panel.open { display: block; }
@@ -340,7 +493,6 @@
   .roster-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); }
   .roster-title span { color: var(--gold); }
   .roster-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.1em; margin-bottom: 2rem; margin-top: 0.4rem; }
-  .roster-count { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; }
   .roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
   .roster-card { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
   .roster-card:hover { border-color: rgba(201,168,76,0.3); }
@@ -357,6 +509,21 @@
   .roster-team-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); width: 1.4rem; height: 1.4rem; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   #roster-empty { text-align: center; padding: 4rem 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gray-mid); letter-spacing: 0.1em; line-height: 2; }
 
+  /* ── SEEKING PANEL ── */
+  #seeking-panel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; overflow: auto; padding: 2rem; }
+  #seeking-panel.open { display: block; }
+  .seeking-inner { background: #111; border: 1px solid rgba(82,183,136,0.2); border-radius: 4px; max-width: 640px; margin: 0 auto; padding: 2rem; }
+  .seeking-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--white); margin-bottom: 0.35rem; }
+  .seeking-title span { color: var(--green-light); }
+  .seeking-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--gray-mid); letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .seeking-note { font-size: 0.8rem; color: var(--gray-mid); font-style: italic; line-height: 1.6; margin-bottom: 1.5rem; padding: 0.75rem 1rem; border-left: 2px solid rgba(82,183,136,0.3); background: rgba(82,183,136,0.04); border-radius: 0 2px 2px 0; }
+  .seeking-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .seeking-card { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.1rem; border: 1px solid var(--border); border-radius: 3px; background: rgba(255,255,255,0.02); gap: 1rem; }
+  .seeking-name { font-size: 0.9rem; color: var(--white); font-weight: 400; }
+  .seeking-rating { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--gold); }
+  .seeking-section { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-light); background: rgba(82,183,136,0.1); border: 1px solid rgba(82,183,136,0.2); padding: 0.15rem 0.4rem; border-radius: 2px; }
+  #seeking-empty { text-align: center; padding: 3rem 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--gray-mid); letter-spacing: 0.1em; line-height: 2; }
+
   /* ── LOADING OVERLAY ── */
   #loading-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:1rem; }
   #loading-overlay.show { display:flex; }
@@ -367,7 +534,7 @@
   .error-banner.show { display:block; }
 
   /* ── TOAST ── */
-  #toast { position: fixed; bottom: 5rem; right: 2rem; background: var(--blue-dark); border: 1px solid var(--blue-mid); color: var(--blue-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.75rem 1.25rem; border-radius: 2px; z-index: 999; opacity: 0; transform: translateY(1rem); transition: all 0.3s; pointer-events: none; }
+  #toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--blue-dark); border: 1px solid var(--blue-mid); color: var(--blue-light); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.75rem 1.25rem; border-radius: 2px; z-index: 999; opacity: 0; transform: translateY(1rem); transition: all 0.3s; pointer-events: none; }
   #toast.show { opacity: 1; transform: translateY(0); }
 
   /* Roster note */
@@ -377,9 +544,8 @@
     font-style: italic;
     margin-bottom: 1.5rem;
     line-height: 1.6;
-    padding-left: 0.25rem;
-    border-left: 2px solid var(--border);
     padding-left: 0.75rem;
+    border-left: 2px solid var(--border);
   }
 
   /* USCF lookup link */
@@ -407,6 +573,7 @@
     .edit-grid { grid-template-columns: 1fr !important; }
     .edit-grid-4 { grid-template-columns: 1fr 1fr !important; }
     .conf-number { font-size: 1.75rem; }
+    .pair-team-input { width: 100%; }
   }
 </style>
 </head>
@@ -428,23 +595,15 @@ const TOURNAMENT_CONFIG = {
   zeffyURL:       "https://www.zeffy.com/en-US/ticketing/memorial-day-team-rapid--2026",
 
   // ── Sections ─────────────────────────────────────────────
-  // Add one object per section. Fields:
-  //   name       – display name (shown in dropdown and SJSON)
-  //   finalRound – number of rounds
-  //   firstBoard – starting board number for this section
-  //   teamCut    – players per team counted for team score
-  //   blitz      – true / false
   sections: [
     { name: "Open", finalRound: 4, firstBoard: 1, teamCut: 4, blitz: false },
     // { name: "Reserve", finalRound: 5, firstBoard: 1, teamCut: 4, blitz: false },
   ],
 
   // ── Team roster size ──────────────────────────────────────
-  // Number of required players per team (not counting the alternate).
   playersPerTeam: 4,
 
   // ── Google Apps Script URL ──────────────────────────────────
-  // Paste your Web App URL here after deploying the Apps Script.
   scriptURL: "https://script.google.com/macros/s/AKfycbxfOR1TnHlv-C8jGGLXDHh-ugLMkJdITpAZXoK2qo6WL18QOpzM6sE7p9CorHLQw-7szg/exec",
 
   tournamentKey: "memorial", // do not change
@@ -458,241 +617,373 @@ const TOURNAMENT_CONFIG = {
   <div class="header-date" id="header-date"></div>
 </header>
 
+<!-- NAV BUTTONS -->
+<div class="nav-buttons">
+  <button class="nav-btn-roster" onclick="openRoster()">View Registered Teams</button>
+  <button class="nav-btn-seeking" onclick="openSeeking()">Players Seeking Teams</button>
+</div>
+
 <!-- MAIN FORM -->
 <main>
-  <form id="reg-form" novalidate>
 
-    <!-- ── TEAM INFO ── -->
-    <div class="section-heading">Team Information</div>
-    <div class="form-grid">
-      <div class="field col-2">
-        <label>Team Name <span class="req">*</span></label>
-        <input type="text" id="team-name" placeholder="e.g. Punahou School" autocomplete="organization">
-        <div class="field-error" id="err-team-name">Required</div>
-      </div>
-      <div class="field">
-        <label>Section <span class="req">*</span></label>
-        <select id="section">
-          <option value="">— Select —</option>
-        </select>
-        <div class="field-error" id="err-section">Please select a section</div>
-      </div>
-      <div class="field col-2">
-        <label>Contact Email <span class="req">*</span></label>
-        <input type="email" id="email" placeholder="coach or captain email" autocomplete="email">
-        <div class="field-error" id="err-email">Valid email required</div>
-      </div>
-      <div class="field">
-        <label>Contact Phone <span class="req">*</span></label>
-        <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
-        <div class="field-error" id="err-phone">Required</div>
-      </div>
-    </div>
-
-    <!-- ── PRIZE CATEGORIES ── -->
-    <div class="section-heading" style="margin-top:2.5rem">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
-    <div class="prize-category-grid">
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="University Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">University Team</span>
-          <span class="prize-option-desc">All players currently enrolled in a graduate or undergraduate program</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="High School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">High School Team</span>
-          <span class="prize-option-desc">All players in grades 9–12, not necessarily at the same school</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Middle School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Middle School Team</span>
-          <span class="prize-option-desc">All players in grades 6–8</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Elementary School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Elementary School Team</span>
-          <span class="prize-option-desc">All players in grades 3–6</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Primary School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Primary School Team</span>
-          <span class="prize-option-desc">All players in grades K–3</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Young'uns">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Young'uns</span>
-          <span class="prize-option-desc">All players age 6 or younger</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Mixed Doubles">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Mixed Doubles</span>
-          <span class="prize-option-desc">Two male and two female players</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Female Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Female Team</span>
-          <span class="prize-option-desc">All female players</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Senior Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Senior Team</span>
-          <span class="prize-option-desc">All players age 50 or older</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Military Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Military Team</span>
-          <span class="prize-option-desc">All players must be current or former U.S. armed forces service members</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Family Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Family Team</span>
-          <span class="prize-option-desc">All players must be members of the same family or household</span>
-        </div>
-      </label>
-      <label class="prize-option" onclick="togglePrize(this)">
-        <input type="checkbox" name="prize_category" value="Parents & Kids">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Parents & Kids</span>
-          <span class="prize-option-desc">Two parents and two children, can be from the same or different families</span>
-        </div>
-      </label>
-    </div>
-    <p class="prize-note">Prize category selections are self-reported and subject to verification by the tournament director. Teams may select more than one category if eligible.</p>
-
-    <!-- ── PLAYER ROSTER ── -->
-    <div class="section-heading" style="margin-top:2.5rem">Player Roster</div>
-    <p class="roster-note">Board order will be determined by rating in descending order. Unrated players will be assigned to the lowest available board. The alternate will only play if one of the other team members is unavailable.</p>
-
-    <!-- Players 1–4 (required) -->
-    <div id="players-container"></div>
-
-    <!-- Player 5 — Alternate (optional) -->
-    <div class="player-card alternate" id="card-alt">
-      <div class="player-card-header">
-        <div class="player-card-title">
-          <div class="board-num">5</div>
-          Alternate
-        </div>
-        <span class="alternate-badge">Optional</span>
-      </div>
-      <div class="player-card-body">
-        <div class="form-grid">
-          <div class="field">
-            <label>First Name</label>
-            <input type="text" id="p5-first" placeholder="First name">
-          </div>
-          <div class="field">
-            <label>Last Name</label>
-            <input type="text" id="p5-last" placeholder="Last name">
-          </div>
-          <div class="field field-with-lookup">
-            <label>USCF ID</label>
-            <input type="text" id="p5-uscf" placeholder="e.g. 12345678" maxlength="10">
-            <a href="https://ratings.uschess.org/" target="_blank" rel="noopener" class="uscf-lookup">Look up USCF ID &amp; Rating</a>
-          </div>
-          <div class="field">
-            <label>Quick Rating</label>
-            <input type="number" id="p5-rating" placeholder="e.g. 1450" min="100" max="3000">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Submit -->
-    <!-- ── AVERAGE TEAM RATING ── -->
-    <div class="avg-rating-box" id="avg-rating-box">
-      <div>
-        <div class="avg-rating-label">Average Team Rating</div>
-        <div class="avg-rating-limit" id="avg-rating-limit">Limit: 2000 USCF Quick</div>
-      </div>
-      <div class="avg-rating-value empty" id="avg-rating-value">No ratings entered</div>
-    </div>
-
-    <div class="error-banner" id="submit-error"></div>
-    <!-- ── WAIVER / MEDIA RELEASE ── -->
-    <div class="waiver-section">
-      <div class="waiver-text">
-        By submitting this registration, I confirm that I am authorized to register all players listed above.
-        I grant the Hawaii Chess Federation (HCF) permission to photograph, video record, and use images or
-        likenesses of all registered participants — including minors — on our website, social media channels,
-        and fundraising materials, without compensation. If any registered player is a minor, I confirm that
-        I have authority to provide this consent on their behalf as a parent or legal guardian.
-        <br><br>
-        In consideration of participation in this event, I, on behalf of myself and all registered players,
-        hereby release, waive, and discharge the Hawaii Chess Federation, its officers, directors, volunteers,
-        and agents from any and all claims, demands, or causes of action arising out of or related to
-        participation in this event, including but not limited to personal injury, property damage, or loss,
-        whether caused by negligence or otherwise. I acknowledge that chess events involve inherent risks,
-        and I voluntarily assume all such risks on behalf of myself and any minors I am registering.
-      </div>
-      <label class="waiver-checkbox-row">
-        <input type="checkbox" id="waiver-checkbox">
-        <span class="waiver-checkbox-label">
-          I agree to the above media release and liability waiver on behalf of all registered participants.
-          <span class="req">*</span>
-        </span>
-      </label>
-      <div class="field-error waiver-error" id="err-waiver">You must agree to the media release to submit.</div>
-    </div>
-
-    <div class="submit-row">
-      <span class="submit-note">Fields marked <span style="color:var(--gold)">*</span> are required</span>
-      <button type="submit" class="btn-submit">Submit Registration ♟</button>
-    </div>
-  </form>
-
-  <!-- Confirmation Box -->
-  <div id="success-box">
-    <div class="success-header">✓ Team Registration Received</div>
-    <div class="success-body">
-      <div class="conf-number-label">Your Confirmation Number</div>
-      <div class="conf-number" id="conf-display">——————</div>
-      <div class="conf-step">
-        <div class="conf-step-num">1</div>
-        <div class="conf-step-text"><strong>Write down or copy your confirmation number above.</strong> You'll need it in the next step.</div>
-      </div>
-      <div class="conf-step">
-        <div class="conf-step-num">2</div>
-        <div class="conf-step-text">
-          Click the button below to pay your entry fee on Zeffy. When prompted, enter your confirmation number
-          <strong id="conf-inline">——————</strong> in the <em>"Confirmation Number (from registration form)"</em> field so we can match your payment to this registration.
-        </div>
-      </div>
-      <div class="conf-step">
-        <div class="conf-step-num">3</div>
-        <div class="conf-step-text">Once payment is confirmed, your registration will be marked <strong style="color:var(--green-light)">Paid</strong> and your team is all set!</div>
-      </div>
-      <div class="conf-divider"></div>
-      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;">
-        <a id="zeffy-btn" href="#" target="_blank" rel="noopener" class="btn-zeffy">Pay Entry Fee on Zeffy →</a>
-        <button type="button" class="btn-register-another" onclick="resetForm()">Register Another Team</button>
-      </div>
-    </div>
+  <!-- ── REGISTRATION MODE TOGGLE ── -->
+  <div class="reg-mode-toggle">
+    <button class="reg-mode-btn active" id="mode-btn-team" onclick="setRegMode('team')">Register a Team</button>
+    <button class="reg-mode-btn" id="mode-btn-solo" onclick="setRegMode('solo')">Register as an Individual Player</button>
   </div>
+  <div class="reg-mode-desc" id="reg-mode-desc">
+    Register your full team of 4 players (plus an optional alternate). All players must have a valid USCF ID.
+    The average Quick rating across your 4 main players must be under 2000.
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TEAM REGISTRATION SECTION
+       ══════════════════════════════════════════════════════ -->
+  <div id="team-reg-section">
+    <form id="reg-form" novalidate>
+
+      <!-- ── TEAM INFO ── -->
+      <div class="section-heading">Team Information</div>
+      <div class="form-grid">
+        <div class="field col-2">
+          <label>Team Name <span class="req">*</span></label>
+          <input type="text" id="team-name" placeholder="e.g. Punahou School" autocomplete="organization">
+          <div class="field-error" id="err-team-name">Required</div>
+        </div>
+        <div class="field">
+          <label>Section <span class="req">*</span></label>
+          <select id="section">
+            <option value="">— Select —</option>
+          </select>
+          <div class="field-error" id="err-section">Please select a section</div>
+        </div>
+        <div class="field col-2">
+          <label>Contact Email <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="coach or captain email" autocomplete="email">
+          <div class="field-error" id="err-email">Valid email required</div>
+        </div>
+        <div class="field">
+          <label>Contact Phone <span class="req">*</span></label>
+          <input type="tel" id="phone" placeholder="(808) 555-0100" autocomplete="tel">
+          <div class="field-error" id="err-phone">Required</div>
+        </div>
+      </div>
+
+      <!-- ── PRIZE CATEGORIES ── -->
+      <div class="section-heading" style="margin-top:2.5rem">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
+      <div class="prize-category-grid">
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="University Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">University Team</span>
+            <span class="prize-option-desc">All players currently enrolled in a graduate or undergraduate program</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="High School Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">High School Team</span>
+            <span class="prize-option-desc">All players in grades 9–12, not necessarily at the same school</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Middle School Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Middle School Team</span>
+            <span class="prize-option-desc">All players in grades 6–8</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Elementary School Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Elementary School Team</span>
+            <span class="prize-option-desc">All players in grades 3–6</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Primary School Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Primary School Team</span>
+            <span class="prize-option-desc">All players in grades K–3</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Young'uns">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Young'uns</span>
+            <span class="prize-option-desc">All players age 6 or younger</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Mixed Doubles">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Mixed Doubles</span>
+            <span class="prize-option-desc">Two male and two female players</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Female Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Female Team</span>
+            <span class="prize-option-desc">All female players</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Senior Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Senior Team</span>
+            <span class="prize-option-desc">All players age 50 or older</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Military Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Military Team</span>
+            <span class="prize-option-desc">All players must be current or former U.S. armed forces service members</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Family Team">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Family Team</span>
+            <span class="prize-option-desc">All players must be members of the same family or household</span>
+          </div>
+        </label>
+        <label class="prize-option" onclick="togglePrize(this)">
+          <input type="checkbox" name="prize_category" value="Parents & Kids">
+          <div class="prize-option-text">
+            <span class="prize-option-name">Parents &amp; Kids</span>
+            <span class="prize-option-desc">Two parents and two children, can be from the same or different families</span>
+          </div>
+        </label>
+      </div>
+      <p class="prize-note">Prize category selections are self-reported and subject to verification by the tournament director. Teams may select more than one category if eligible.</p>
+
+      <!-- ── PLAYER ROSTER ── -->
+      <div class="section-heading" style="margin-top:2.5rem">Player Roster</div>
+      <p class="roster-note">Board order will be determined by rating in descending order. Unrated players will be assigned to the lowest available board. The alternate will only play if one of the other team members is unavailable.</p>
+
+      <!-- Players 1–4 (required) -->
+      <div id="players-container"></div>
+
+      <!-- Player 5 — Alternate (optional) -->
+      <div class="player-card alternate" id="card-alt">
+        <div class="player-card-header">
+          <div class="player-card-title">
+            <div class="board-num">5</div>
+            Alternate
+          </div>
+          <span class="alternate-badge">Optional</span>
+        </div>
+        <div class="player-card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" id="p5-first" placeholder="First name">
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" id="p5-last" placeholder="Last name">
+            </div>
+            <div class="field field-with-lookup">
+              <label>USCF ID</label>
+              <input type="text" id="p5-uscf" placeholder="e.g. 12345678" maxlength="10">
+              <a href="https://ratings.uschess.org/" target="_blank" rel="noopener" class="uscf-lookup">Look up USCF ID &amp; Rating</a>
+            </div>
+            <div class="field">
+              <label>Quick Rating</label>
+              <input type="number" id="p5-rating" placeholder="e.g. 1450" min="100" max="3000">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AVERAGE TEAM RATING ── -->
+      <div class="avg-rating-box" id="avg-rating-box">
+        <div>
+          <div class="avg-rating-label">Average Team Rating</div>
+          <div class="avg-rating-limit" id="avg-rating-limit">Limit: 2000 USCF Quick</div>
+        </div>
+        <div class="avg-rating-value empty" id="avg-rating-value">No ratings entered</div>
+      </div>
+
+      <div class="error-banner" id="submit-error"></div>
+
+      <!-- ── WAIVER ── -->
+      <div class="waiver-section">
+        <div class="waiver-text">
+          By submitting this registration, I confirm that I am authorized to register all players listed above.
+          I grant the Hawaii Chess Federation (HCF) permission to photograph, video record, and use images or
+          likenesses of all registered participants — including minors — on our website, social media channels,
+          and fundraising materials, without compensation. If any registered player is a minor, I confirm that
+          I have authority to provide this consent on their behalf as a parent or legal guardian.
+          <br><br>
+          In consideration of participation in this event, I, on behalf of myself and all registered players,
+          hereby release, waive, and discharge the Hawaii Chess Federation, its officers, directors, volunteers,
+          and agents from any and all claims, demands, or causes of action arising out of or related to
+          participation in this event, including but not limited to personal injury, property damage, or loss,
+          whether caused by negligence or otherwise. I acknowledge that chess events involve inherent risks,
+          and I voluntarily assume all such risks on behalf of myself and any minors I am registering.
+        </div>
+        <label class="waiver-checkbox-row">
+          <input type="checkbox" id="waiver-checkbox">
+          <span class="waiver-checkbox-label">
+            I agree to the above media release and liability waiver on behalf of all registered participants.
+            <span class="req">*</span>
+          </span>
+        </label>
+        <div class="field-error waiver-error" id="err-waiver">You must agree to the media release to submit.</div>
+      </div>
+
+      <div class="submit-row">
+        <span class="submit-note">Fields marked <span style="color:var(--gold)">*</span> are required</span>
+        <button type="submit" class="btn-submit">Submit Registration ♟</button>
+      </div>
+    </form>
+
+    <!-- Team Confirmation Box -->
+    <div id="success-box">
+      <div class="success-header">✓ Team Registration Received</div>
+      <div class="success-body">
+        <div class="conf-number-label">Your Confirmation Number</div>
+        <div class="conf-number" id="conf-display">——————</div>
+        <div class="conf-step">
+          <div class="conf-step-num">1</div>
+          <div class="conf-step-text"><strong>Write down or copy your confirmation number above.</strong> You'll need it in the next step.</div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">2</div>
+          <div class="conf-step-text">
+            Click the button below to pay your entry fee on Zeffy. When prompted, enter your confirmation number
+            <strong id="conf-inline">——————</strong> in the <em>"Confirmation Number (from registration form)"</em> field so we can match your payment to this registration.
+          </div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">3</div>
+          <div class="conf-step-text">Once payment is confirmed, your registration will be marked <strong style="color:var(--green-light)">Paid</strong> and your team is all set!</div>
+        </div>
+        <div class="conf-divider"></div>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+          <a id="zeffy-btn" href="#" target="_blank" rel="noopener" class="btn-zeffy">Pay Entry Fee on Zeffy →</a>
+          <button type="button" class="btn-register-another" onclick="resetTeamForm()">Register Another Team</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- end #team-reg-section -->
+
+  <!-- ══════════════════════════════════════════════════════
+       INDIVIDUAL (SOLO) REGISTRATION SECTION
+       ══════════════════════════════════════════════════════ -->
+  <div id="solo-reg-section" style="display:none">
+    <form id="solo-form" novalidate>
+
+      <div class="section-heading">Individual Player Information</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" id="solo-first" placeholder="First name" autocomplete="given-name">
+          <div class="field-error" id="err-solo-first">Required</div>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" id="solo-last" placeholder="Last name" autocomplete="family-name">
+          <div class="field-error" id="err-solo-last">Required</div>
+        </div>
+        <div class="field field-with-lookup">
+          <label>USCF ID <span class="req">*</span></label>
+          <input type="text" id="solo-uscf" placeholder="e.g. 12345678" maxlength="10">
+          <div class="field-error" id="err-solo-uscf">Required</div>
+          <a href="https://ratings.uschess.org/" target="_blank" rel="noopener" class="uscf-lookup">Look up USCF ID &amp; Rating</a>
+        </div>
+        <div class="field">
+          <label>Quick Rating <span class="opt">(optional)</span></label>
+          <input type="number" id="solo-rating" placeholder="e.g. 1450" min="100" max="3000">
+        </div>
+        <div class="field">
+          <label>Section <span class="req">*</span></label>
+          <select id="solo-section">
+            <option value="">— Select —</option>
+          </select>
+          <div class="field-error" id="err-solo-section">Please select a section</div>
+        </div>
+        <div class="field col-2">
+          <label>Contact Email <span class="req">*</span></label>
+          <input type="email" id="solo-email" placeholder="your@email.com" autocomplete="email">
+          <div class="field-error" id="err-solo-email">Valid email required</div>
+        </div>
+        <div class="field">
+          <label>Contact Phone <span class="req">*</span></label>
+          <input type="tel" id="solo-phone" placeholder="(808) 555-0100" autocomplete="tel">
+          <div class="field-error" id="err-solo-phone">Required</div>
+        </div>
+      </div>
+
+      <div class="error-banner" id="solo-submit-error"></div>
+
+      <!-- ── WAIVER ── -->
+      <div class="waiver-section" style="margin-top:1.5rem">
+        <div class="waiver-text">
+          By submitting this registration, I grant the Hawaii Chess Federation (HCF) permission to photograph,
+          video record, and use images or likenesses of all registered participants on our website, social media
+          channels, and fundraising materials, without compensation.
+          <br><br>
+          In consideration of participation in this event, I hereby release, waive, and discharge the Hawaii Chess
+          Federation, its officers, directors, volunteers, and agents from any and all claims arising out of or
+          related to participation in this event, including but not limited to personal injury, property damage,
+          or loss, whether caused by negligence or otherwise.
+        </div>
+        <label class="waiver-checkbox-row">
+          <input type="checkbox" id="solo-waiver-checkbox">
+          <span class="waiver-checkbox-label">
+            I agree to the above media release and liability waiver.
+            <span class="req">*</span>
+          </span>
+        </label>
+        <div class="field-error waiver-error" id="err-solo-waiver">You must agree to the media release to submit.</div>
+      </div>
+
+      <div class="submit-row">
+        <span class="submit-note">Fields marked <span style="color:var(--gold)">*</span> are required</span>
+        <button type="submit" class="btn-submit">Submit Individual Registration ♟</button>
+      </div>
+    </form>
+
+    <!-- Solo Confirmation Box -->
+    <div id="solo-success-box">
+      <div class="success-header">✓ Individual Registration Received</div>
+      <div class="success-body">
+        <div class="conf-number-label">Your Confirmation Number</div>
+        <div class="conf-number" id="solo-conf-display">——————</div>
+        <div class="conf-step">
+          <div class="conf-step-num">1</div>
+          <div class="conf-step-text"><strong>Write down or copy your confirmation number above.</strong> You'll need it in the next step.</div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">2</div>
+          <div class="conf-step-text">
+            Click the button below to pay your individual entry fee on Zeffy. Enter your confirmation number
+            <strong id="solo-conf-inline">——————</strong> in the <em>"Confirmation Number (from registration form)"</em> field.
+          </div>
+        </div>
+        <div class="conf-step">
+          <div class="conf-step-num">3</div>
+          <div class="conf-step-text">The tournament director will pair you with teammates and notify you by email before the tournament. You can check the <strong>Players Seeking Teams</strong> list above to see others who have also registered individually.</div>
+        </div>
+        <div class="conf-divider"></div>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+          <a id="solo-zeffy-btn" href="#" target="_blank" rel="noopener" class="btn-zeffy">Pay Entry Fee on Zeffy →</a>
+          <button type="button" class="btn-register-another" onclick="resetSoloForm()">Register Another Player</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- end #solo-reg-section -->
+
 </main>
 
-<!-- Public Roster Button -->
-<button id="roster-toggle-btn" onclick="openRoster()">View Registered Teams</button>
+<!-- Admin button below the form -->
+<div class="admin-footer-btn">
+  <button id="admin-toggle-btn" onclick="openAdmin()">⚙ Admin Panel</button>
+</div>
 
 <!-- Loading Overlay -->
 <div id="loading-overlay">
@@ -700,27 +991,22 @@ const TOURNAMENT_CONFIG = {
   <div class="loading-text" id="loading-text">Saving registration...</div>
 </div>
 
-<!-- Admin Button -->
-<button id="admin-toggle-btn" onclick="openAdmin()">Admin Panel</button>
-
 <!-- Toast -->
 <div id="toast"></div>
 
-<!-- Edit Modal -->
+<!-- Edit Modal (shared for team and solo) -->
 <div id="edit-modal">
   <div class="edit-modal-inner">
     <div class="edit-modal-header">
-      <span class="edit-modal-title">Edit Registration</span>
+      <span class="edit-modal-title" id="edit-modal-title">Edit Registration</span>
       <span class="edit-modal-conf" id="edit-conf-label"></span>
     </div>
-    <div class="edit-modal-body" id="edit-modal-body">
-      <!-- Populated dynamically -->
-    </div>
+    <div class="edit-modal-body" id="edit-modal-body"></div>
     <div class="edit-modal-footer">
-      <button class="btn-delete" onclick="deleteRegistration()">Delete Registration</button>
+      <button class="btn-delete" id="edit-delete-btn" onclick="deleteCurrentEdit()">Delete Registration</button>
       <span class="edit-save-msg" id="edit-save-msg">✓ Saved</span>
       <button class="btn-admin-outline" onclick="closeEditModal()">Cancel</button>
-      <button class="btn-admin btn-admin-gold" onclick="saveEdit()">Save Changes</button>
+      <button class="btn-admin btn-admin-gold" id="edit-save-btn" onclick="saveCurrentEdit()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -740,61 +1026,64 @@ const TOURNAMENT_CONFIG = {
   </div>
 </div>
 
+<!-- Players Seeking Teams Panel -->
+<div id="seeking-panel">
+  <div class="seeking-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem;">
+      <div>
+        <div class="seeking-title">Players <span>Seeking Teams</span></div>
+        <div class="seeking-subtitle" id="seeking-subtitle">Loading...</div>
+      </div>
+      <button class="btn-admin-outline" onclick="closeSeeking()">Close</button>
+    </div>
+    <div class="seeking-note">
+      These players have registered individually and are looking to join a team.
+      If you'd like to be paired with one of these players, contact the tournament director.
+    </div>
+    <div class="seeking-list" id="seeking-list"></div>
+    <div id="seeking-empty" style="display:none">No individual players are currently seeking teams.<br>Check back later!</div>
+  </div>
+</div>
+
 <!-- Admin Panel -->
 <div id="admin-panel">
   <div class="admin-inner">
     <div class="admin-header">
-      <div class="admin-title">Team Registrations</div>
-      <div class="admin-actions">
-        <div class="export-group">
-          <span class="export-group-label">SwissSys:</span>
-          <button class="btn-admin btn-admin-blue" onclick="exportSJSON('all')">Export All → SJSON</button>
-          <button class="btn-admin btn-admin-blue" onclick="exportSJSON('paid')">Export Paid → SJSON</button>
-        </div>
-        <div class="export-group">
-          <span class="export-group-label">CSV:</span>
-          <button class="btn-admin btn-admin-gold" onclick="exportCSV('all')">All</button>
-          <button class="btn-admin btn-admin-green" onclick="exportCSV('paid')">Paid Only</button>
-        </div>
-        <button class="btn-admin-danger" onclick="clearAll()">Clear All</button>
-        <button class="btn-admin-outline" onclick="closeAdmin()">Close</button>
+      <div class="admin-title" id="admin-title">Team Registrations</div>
+      <div class="admin-actions" id="admin-actions-bar">
+        <!-- populated by renderAdminActions() -->
       </div>
     </div>
 
     <!-- Stats -->
     <div class="stats-bar">
-      <div class="stat-item"><div class="stat-value" style="color:var(--gold)" id="stat-total">0</div><div class="stat-label">Teams</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:var(--gold)" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Teams</div></div>
       <div class="stat-item"><div class="stat-value" style="color:var(--green-light)" id="stat-paid">0</div><div class="stat-label">Paid</div></div>
       <div class="stat-item"><div class="stat-value" style="color:#e07070" id="stat-unpaid">0</div><div class="stat-label">Unpaid</div></div>
-      <div class="stat-item"><div class="stat-value" style="color:var(--gray-light)" id="stat-players">0</div><div class="stat-label">Total Players</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:var(--gray-light)" id="stat-extra">0</div><div class="stat-label" id="stat-extra-label">Total Players</div></div>
     </div>
 
     <!-- Filters -->
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('paid',this)">Paid</button>
-      <button class="filter-btn" onclick="setFilter('unpaid',this)">Unpaid</button>
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="setAdminFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setAdminFilter('paid',this)">Paid</button>
+      <button class="filter-btn" onclick="setAdminFilter('unpaid',this)">Unpaid</button>
+      <button class="filter-btn" onclick="setAdminFilter('solo',this)">Individual Players</button>
+    </div>
+
+    <!-- Solo Pair Action Bar -->
+    <div class="pair-action-bar" id="pair-action-bar">
+      <div class="pair-action-names" id="pair-action-names">Select 4 players to pair</div>
+      <input class="pair-team-input" type="text" id="pair-team-name" placeholder="Team name (auto-generated if blank)">
+      <button class="btn-admin btn-admin-green" onclick="pairSelected()">Create Team →</button>
+      <div class="pair-action-warning" id="pair-section-warning"></div>
     </div>
 
     <!-- Table -->
     <div class="table-wrap">
       <div id="no-registrations">No registrations yet.</div>
       <table id="reg-table" style="display:none">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Conf #</th>
-            <th>Payment</th>
-            <th>Team Name</th>
-            <th>Section</th>
-            <th>Contact Email</th>
-            <th>Phone</th>
-            <th>Players & Ratings</th>
-            <th>Prize Categories</th>
-            <th>Registered At</th>
-            <th></th>
-          </tr>
-        </thead>
+        <thead id="reg-thead"></thead>
         <tbody id="reg-tbody"></tbody>
       </table>
     </div>
@@ -805,8 +1094,12 @@ const TOURNAMENT_CONFIG = {
 // ══════════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════════
-let activeFilter = 'all';
-let registrations = []; // loaded from Google Sheets
+let activeFilter   = 'all'; // 'all' | 'paid' | 'unpaid' | 'solo'
+let registrations  = [];    // team registrations
+let soloRegs       = [];    // individual registrations
+let editIdx        = null;
+let editMode       = 'team'; // 'team' | 'solo'
+let selectedSolos  = new Set(); // conf #s of checked solo rows
 
 // ══════════════════════════════════════════════════════
 //  INIT
@@ -824,24 +1117,41 @@ let registrations = []; // loaded from Google Sheets
     nameEl.textContent = full;
   }
   document.getElementById('header-date').textContent = cfg.displayDate;
-  document.title = cfg.name + ' — Team Registration';
+  document.title = cfg.name + ' — Registration';
 
-  // Sections dropdown
+  // Populate section dropdowns
   const sel = document.getElementById('section');
+  const soloSel = document.getElementById('solo-section');
   cfg.sections.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.name; opt.textContent = s.name;
-    sel.appendChild(opt);
+    const opt1 = document.createElement('option');
+    opt1.value = s.name; opt1.textContent = s.name;
+    sel.appendChild(opt1);
+    const opt2 = document.createElement('option');
+    opt2.value = s.name; opt2.textContent = s.name;
+    soloSel.appendChild(opt2);
   });
 
   // Build required player cards (boards 1–N)
   const container = document.getElementById('players-container');
   for (let i = 1; i <= cfg.playersPerTeam; i++) {
-    container.innerHTML += playerCardHTML(i, false);
+    container.innerHTML += playerCardHTML(i);
   }
 })();
 
-function playerCardHTML(n, isAlt) {
+// ══════════════════════════════════════════════════════
+//  REG MODE TOGGLE
+// ══════════════════════════════════════════════════════
+function setRegMode(mode) {
+  document.getElementById('team-reg-section').style.display = mode === 'team' ? 'block' : 'none';
+  document.getElementById('solo-reg-section').style.display = mode === 'solo' ? 'block' : 'none';
+  document.getElementById('mode-btn-team').classList.toggle('active', mode === 'team');
+  document.getElementById('mode-btn-solo').classList.toggle('active', mode === 'solo');
+  document.getElementById('reg-mode-desc').textContent = mode === 'team'
+    ? 'Register your full team of 4 players (plus an optional alternate). All players must have a valid USCF ID. The average Quick rating across your 4 main players must be under 2000.'
+    : 'Register as an individual player. The tournament director will pair you with teammates before the event. Your Quick rating will be used to help form balanced teams.';
+}
+
+function playerCardHTML(n) {
   return `
   <div class="player-card" id="card-p${n}">
     <div class="player-card-header">
@@ -880,22 +1190,14 @@ function playerCardHTML(n, isAlt) {
 // ══════════════════════════════════════════════════════
 //  PRIZE CATEGORY TOGGLE
 // ══════════════════════════════════════════════════════
-function toggleEditPrize(label) {
-  setTimeout(() => {
-    label.classList.toggle('selected', label.querySelector('input').checked);
-  }, 0);
-}
-
 function togglePrize(label) {
-  // Slight delay so checkbox state updates first
-  setTimeout(() => {
-    label.classList.toggle('selected', label.querySelector('input').checked);
-  }, 0);
+  setTimeout(() => { label.classList.toggle('selected', label.querySelector('input').checked); }, 0);
 }
-
+function toggleEditPrize(label) {
+  setTimeout(() => { label.classList.toggle('selected', label.querySelector('input').checked); }, 0);
+}
 function getSelectedPrizeCategories() {
-  return Array.from(document.querySelectorAll('input[name="prize_category"]:checked'))
-    .map(cb => cb.value);
+  return Array.from(document.querySelectorAll('input[name="prize_category"]:checked')).map(cb => cb.value);
 }
 
 // ══════════════════════════════════════════════════════
@@ -908,11 +1210,9 @@ function updateAverageRating() {
     const val = parseInt(document.getElementById(`p${i}-rating`)?.value || '') || 0;
     if (val > 0) ratings.push(val);
   }
-
   const box   = document.getElementById('avg-rating-box');
   const val   = document.getElementById('avg-rating-value');
   const limit = document.getElementById('avg-rating-limit');
-
   if (ratings.length === 0) {
     val.textContent = 'No ratings entered';
     val.className   = 'avg-rating-value empty';
@@ -920,10 +1220,8 @@ function updateAverageRating() {
     limit.classList.remove('over-limit');
     return;
   }
-
   const avg = Math.round(ratings.reduce((a, b) => a + b, 0) / ratings.length);
   val.textContent = avg.toLocaleString();
-
   if (avg >= 2000) {
     val.className = 'avg-rating-value over-limit';
     box.classList.add('over-limit');
@@ -938,13 +1236,12 @@ function updateAverageRating() {
 }
 
 // ══════════════════════════════════════════════════════
-//  VALIDATION
+//  VALIDATION — TEAM
 // ══════════════════════════════════════════════════════
 function validate() {
   let ok = true;
   const cfg = TOURNAMENT_CONFIG;
 
-  // Team-level fields
   const teamChecks = [
     { id: 'team-name', err: 'err-team-name' },
     { id: 'section',   err: 'err-section' },
@@ -961,7 +1258,6 @@ function validate() {
     if (!valid) ok = false;
   });
 
-  // Required player fields (boards 1–N)
   for (let i = 1; i <= cfg.playersPerTeam; i++) {
     ['first', 'last', 'uscf'].forEach(field => {
       const el = document.getElementById(`p${i}-${field}`);
@@ -973,24 +1269,20 @@ function validate() {
     });
   }
 
-  // Alternate: if any alternate field is filled, all three are required
   const altFirst = v('p5-first'), altLast = v('p5-last'), altUscf = v('p5-uscf');
-  const altPartial = altFirst || altLast || altUscf;
-  if (altPartial) {
+  if (altFirst || altLast || altUscf) {
     if (!altFirst || !altLast || !altUscf) {
       ['p5-first', 'p5-last', 'p5-uscf'].forEach(id => {
         const el = document.getElementById(id);
-        const valid = !!el.value.trim();
-        el.classList.toggle('invalid', !valid);
+        el.classList.toggle('invalid', !el.value.trim());
       });
       ok = false;
       toast('If registering an alternate, all three alternate fields are required.');
     }
   }
 
-  // Average rating check
   const ratingInputs = [];
-  for (let i = 1; i <= TOURNAMENT_CONFIG.playersPerTeam; i++) {
+  for (let i = 1; i <= cfg.playersPerTeam; i++) {
     const val = parseInt(document.getElementById(`p${i}-rating`)?.value || '') || 0;
     if (val > 0) ratingInputs.push(val);
   }
@@ -1004,34 +1296,25 @@ function validate() {
     }
   }
 
-  // Duplicate USCF ID check
   const ids = [];
-  const uscf1 = v('p1-uscf'); if (uscf1) ids.push({ id: uscf1.toUpperCase(), label: 'Board 1' });
-  const uscf2 = v('p2-uscf'); if (uscf2) ids.push({ id: uscf2.toUpperCase(), label: 'Board 2' });
-  const uscf3 = v('p3-uscf'); if (uscf3) ids.push({ id: uscf3.toUpperCase(), label: 'Board 3' });
-  const uscf4 = v('p4-uscf'); if (uscf4) ids.push({ id: uscf4.toUpperCase(), label: 'Board 4' });
-  if (altUscf) ids.push({ id: altUscf.toUpperCase(), label: 'Alternate' });
-  const seen = {};
-  const dupes = [];
+  for (let i = 1; i <= cfg.playersPerTeam; i++) {
+    const u = v(`p${i}-uscf`); if (u) ids.push({ id: u.toUpperCase(), label: `Board ${i}` });
+  }
+  const altUscfVal = v('p5-uscf'); if (altUscfVal) ids.push({ id: altUscfVal.toUpperCase(), label: 'Alternate' });
+  const seen = {}, dupes = [];
   ids.forEach(entry => {
-    if (seen[entry.id]) {
-      if (!dupes.includes(entry.id)) dupes.push(entry.id);
-    } else {
-      seen[entry.id] = entry.label;
-    }
+    if (seen[entry.id]) { if (!dupes.includes(entry.id)) dupes.push(entry.id); }
+    else seen[entry.id] = entry.label;
   });
   if (dupes.length > 0) {
-    const dupeLabels = dupes.map(d => {
-      const matches = ids.filter(e => e.id === d).map(e => e.label);
-      return matches.join(' and ');
-    });
     const errBanner = document.getElementById('submit-error');
-    errBanner.textContent = 'Duplicate USCF ID detected: ' + dupeLabels.join(', ') + ' have the same USCF ID. Please check and correct.';
+    errBanner.textContent = 'Duplicate USCF ID detected: ' + dupes.map(d => {
+      return ids.filter(e => e.id === d).map(e => e.label).join(' and ');
+    }).join(', ') + ' have the same USCF ID.';
     errBanner.classList.add('show');
     ok = false;
   }
 
-  // Waiver checkbox
   const waiver = document.getElementById('waiver-checkbox');
   if (!waiver.checked) {
     waiver.classList.add('invalid');
@@ -1046,7 +1329,41 @@ function validate() {
 }
 
 // ══════════════════════════════════════════════════════
-//  SUBMIT
+//  VALIDATION — SOLO
+// ══════════════════════════════════════════════════════
+function validateSolo() {
+  let ok = true;
+  const checks = [
+    { id: 'solo-first',   err: 'err-solo-first' },
+    { id: 'solo-last',    err: 'err-solo-last' },
+    { id: 'solo-uscf',    err: 'err-solo-uscf' },
+    { id: 'solo-section', err: 'err-solo-section' },
+    { id: 'solo-email',   err: 'err-solo-email', type: 'email' },
+    { id: 'solo-phone',   err: 'err-solo-phone' },
+  ];
+  checks.forEach(({ id, err, type }) => {
+    const el = document.getElementById(id);
+    const val = el.value.trim();
+    let valid = !!val;
+    if (type === 'email' && val) valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    el.classList.toggle('invalid', !valid);
+    document.getElementById(err).classList.toggle('visible', !valid);
+    if (!valid) ok = false;
+  });
+  const waiver = document.getElementById('solo-waiver-checkbox');
+  if (!waiver.checked) {
+    waiver.classList.add('invalid');
+    document.getElementById('err-solo-waiver').classList.add('visible');
+    ok = false;
+  } else {
+    waiver.classList.remove('invalid');
+    document.getElementById('err-solo-waiver').classList.remove('visible');
+  }
+  return ok;
+}
+
+// ══════════════════════════════════════════════════════
+//  TEAM FORM SUBMIT
 // ══════════════════════════════════════════════════════
 document.getElementById('reg-form').addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -1054,58 +1371,29 @@ document.getElementById('reg-form').addEventListener('submit', async function(e)
 
   const cfg = TOURNAMENT_CONFIG;
   const conf = uniqueConf();
-
-  // Collect players
   const players = [];
   for (let i = 1; i <= cfg.playersPerTeam; i++) {
-    players.push({
-      board:  i,
-      first:  v(`p${i}-first`),
-      last:   v(`p${i}-last`),
-      uscf:   v(`p${i}-uscf`),
-      rating: parseInt(v(`p${i}-rating`)) || 0,
-      alt:    false,
-    });
+    players.push({ board: i, first: v(`p${i}-first`), last: v(`p${i}-last`), uscf: v(`p${i}-uscf`), rating: parseInt(v(`p${i}-rating`)) || 0, alt: false });
   }
-  // Alternate (optional)
   const altFirst = v('p5-first'), altLast = v('p5-last'), altUscf = v('p5-uscf');
   if (altFirst && altLast && altUscf) {
-    players.push({
-      board:  5,
-      first:  altFirst,
-      last:   altLast,
-      uscf:   altUscf,
-      rating: parseInt(v('p5-rating')) || 0,
-      alt:    true
-    });
+    players.push({ board: 5, first: altFirst, last: altLast, uscf: altUscf, rating: parseInt(v('p5-rating')) || 0, alt: true });
   }
 
-  const entry = {
-    conf,
-    paid:            false,
-    team_name:       v('team-name'),
-    section:         v('section'),
-    email:           v('email'),
-    phone:           v('phone'),
-    prize_categories: getSelectedPrizeCategories(),
-    players,
-    timestamp:       new Date().toLocaleString(),
-  };
+  const entry = { conf, paid: false, team_name: v('team-name'), section: v('section'), email: v('email'), phone: v('phone'), prize_categories: getSelectedPrizeCategories(), players, timestamp: new Date().toLocaleString() };
 
   showLoading('Saving registration...');
-  const errBanner = document.getElementById('submit-error');
-  errBanner.classList.remove('show');
+  document.getElementById('submit-error').classList.remove('show');
   try {
     await saveRegistration(entry);
     registrations.push(entry);
   } catch(e) {
     hideLoading();
-    errBanner.textContent = 'Registration could not be saved. Please check your connection and try again.';
-    errBanner.classList.add('show');
+    document.getElementById('submit-error').textContent = 'Registration could not be saved. Please check your connection and try again.';
+    document.getElementById('submit-error').classList.add('show');
     return;
   }
   hideLoading();
-
   document.getElementById('conf-display').textContent = conf;
   document.getElementById('conf-inline').textContent = conf;
   document.getElementById('zeffy-btn').href = cfg.zeffyURL;
@@ -1114,18 +1402,67 @@ document.getElementById('reg-form').addEventListener('submit', async function(e)
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-function resetForm() {
+function resetTeamForm() {
   document.getElementById('reg-form').reset();
   document.getElementById('reg-form').style.display = 'block';
   document.getElementById('success-box').style.display = 'none';
   document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
-  const waiver = document.getElementById('waiver-checkbox');
-  if (waiver) waiver.checked = false;
   document.querySelectorAll('input[name="prize_category"]').forEach(cb => {
     cb.checked = false;
     cb.closest('.prize-option')?.classList.remove('selected');
   });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════════
+//  SOLO FORM SUBMIT
+// ══════════════════════════════════════════════════════
+document.getElementById('solo-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateSolo()) return;
+
+  const conf = uniqueConf();
+  const solo = {
+    conf,
+    paid:        false,
+    first_name:  v('solo-first'),
+    last_name:   v('solo-last'),
+    uscf_id:     v('solo-uscf'),
+    rating:      parseInt(v('solo-rating')) || 0,
+    section:     v('solo-section'),
+    email:       v('solo-email'),
+    phone:       v('solo-phone'),
+    paired_with: '',
+    timestamp:   new Date().toLocaleString(),
+  };
+
+  showLoading('Saving registration...');
+  document.getElementById('solo-submit-error').classList.remove('show');
+  try {
+    await submitSoloReg(solo);
+    soloRegs.push(solo);
+  } catch(err) {
+    hideLoading();
+    document.getElementById('solo-submit-error').textContent = 'Registration could not be saved. Please check your connection and try again.';
+    document.getElementById('solo-submit-error').classList.add('show');
+    return;
+  }
+  hideLoading();
+  document.getElementById('solo-conf-display').textContent = conf;
+  document.getElementById('solo-conf-inline').textContent = conf;
+  document.getElementById('solo-zeffy-btn').href = TOURNAMENT_CONFIG.zeffyURL;
+  document.getElementById('solo-form').style.display = 'none';
+  document.getElementById('solo-success-box').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function resetSoloForm() {
+  document.getElementById('solo-form').reset();
+  document.getElementById('solo-form').style.display = 'block';
+  document.getElementById('solo-success-box').style.display = 'none';
+  document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+  document.querySelectorAll('.field-error').forEach(el => el.classList.remove('visible'));
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1136,37 +1473,33 @@ const TOURNAMENT_KEY = TOURNAMENT_CONFIG.tournamentKey;
 
 async function apiCall(payload) {
   const url = TOURNAMENT_CONFIG.scriptURL;
-  // Include admin password from session for all write operations
   const pw = sessionStorage.getItem('adminPassword');
-  if (pw && payload.action !== 'submit') payload.password = pw;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload),
-  });
+  if (pw && payload.action !== 'submit' && payload.action !== 'submitMemorialSolo') payload.password = pw;
+  const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) });
   return res.json();
 }
 
 async function loadRegistrations() {
-  try {
-    showLoading('Loading registrations...');
-    const url = TOURNAMENT_CONFIG.scriptURL + '?tournament=' + TOURNAMENT_KEY;
-    const res  = await fetch(url);
-    const data = await res.json();
-    if (data.ok) {
-      registrations = data.registrations || [];
-    } else {
-      console.error('Failed to load:', data.error);
-    }
-  } catch(e) {
-    console.error('Load error:', e);
-  } finally {
-    hideLoading();
-  }
+  const url = TOURNAMENT_CONFIG.scriptURL + '?tournament=' + TOURNAMENT_KEY;
+  const res  = await fetch(url);
+  const data = await res.json();
+  if (data.ok) registrations = data.registrations || [];
+}
+
+async function loadSoloRegs() {
+  const url = TOURNAMENT_CONFIG.scriptURL + '?tournament=' + TOURNAMENT_KEY + '&subtype=solo';
+  const res  = await fetch(url);
+  const data = await res.json();
+  if (data.ok) soloRegs = data.solos || [];
 }
 
 async function saveRegistration(entry) {
   const data = await apiCall({ action: 'submit', tournament: TOURNAMENT_KEY, registration: entry });
+  if (!data.ok) throw new Error(data.error || 'Save failed');
+}
+
+async function submitSoloReg(solo) {
+  const data = await apiCall({ action: 'submitMemorialSolo', solo });
   if (!data.ok) throw new Error(data.error || 'Save failed');
 }
 
@@ -1175,8 +1508,18 @@ async function savePaidStatus(conf, paid) {
   if (!data.ok) throw new Error(data.error || 'Update failed');
 }
 
+async function saveSoloPaidStatus(conf, paid) {
+  const data = await apiCall({ action: 'setMemorialSoloPaid', conf, paid });
+  if (!data.ok) throw new Error(data.error || 'Update failed');
+}
+
 async function saveEditToSheet(registration) {
   const data = await apiCall({ action: 'edit', tournament: TOURNAMENT_KEY, registration });
+  if (!data.ok) throw new Error(data.error || 'Edit failed');
+}
+
+async function saveSoloEditToSheet(solo) {
+  const data = await apiCall({ action: 'editMemorialSolo', solo });
   if (!data.ok) throw new Error(data.error || 'Edit failed');
 }
 
@@ -1185,13 +1528,13 @@ async function deleteFromSheet(conf) {
   if (!data.ok) throw new Error(data.error || 'Delete failed');
 }
 
-function showLoading(msg) {
-  document.getElementById('loading-text').textContent = msg || 'Loading...';
-  document.getElementById('loading-overlay').classList.add('show');
+async function deleteSoloFromSheet(conf) {
+  const data = await apiCall({ action: 'deleteMemorialSolo', conf });
+  if (!data.ok) throw new Error(data.error || 'Delete failed');
 }
-function hideLoading() {
-  document.getElementById('loading-overlay').classList.remove('show');
-}
+
+function showLoading(msg) { document.getElementById('loading-text').textContent = msg || 'Loading...'; document.getElementById('loading-overlay').classList.add('show'); }
+function hideLoading() { document.getElementById('loading-overlay').classList.remove('show'); }
 
 // ══════════════════════════════════════════════════════
 //  ADMIN
@@ -1203,47 +1546,98 @@ async function openAdmin() {
     showLoading('Verifying password...');
     try {
       const result = await fetch(TOURNAMENT_CONFIG.scriptURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
+        method: 'POST', headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify({ action: 'validatePassword', password: entered }),
       }).then(r => r.json());
       hideLoading();
       if (result.ok) {
         sessionStorage.setItem('adminAuth', 'true');
         sessionStorage.setItem('adminPassword', entered);
-      } else {
-        alert('Incorrect password.');
-        return;
-      }
-    } catch(e) {
-      hideLoading();
-      alert('Could not verify password. Check your connection and try again.');
-      return;
-    }
+      } else { alert('Incorrect password.'); return; }
+    } catch(e) { hideLoading(); alert('Could not verify password. Check your connection and try again.'); return; }
   }
   document.getElementById('admin-panel').classList.add('open');
   showLoading('Loading registrations...');
-  await loadRegistrations();
+  try {
+    await Promise.all([loadRegistrations(), loadSoloRegs()]);
+  } catch(e) { console.error('Load error:', e); }
   hideLoading();
-  renderTable();
+  selectedSolos.clear();
+  renderAdminView();
 }
+
 function closeAdmin() {
   document.getElementById('admin-panel').classList.remove('open');
+  selectedSolos.clear();
 }
 
-function logoutAdmin() {
-  sessionStorage.removeItem('adminAuth');
-  sessionStorage.removeItem('adminPassword');
-  closeAdmin();
-}
-
-function setFilter(f, btn) {
+function setAdminFilter(f, btn) {
   activeFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTable();
+  selectedSolos.clear();
+  document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.classList.remove('active-green'); });
+  if (f === 'solo') btn.classList.add('active-green');
+  else btn.classList.add('active');
+  renderAdminView();
 }
 
+function renderAdminView() {
+  const isSolo = activeFilter === 'solo';
+
+  // Title
+  document.getElementById('admin-title').textContent = isSolo ? 'Individual Players' : 'Team Registrations';
+
+  // Stats
+  if (isSolo) {
+    const paid     = soloRegs.filter(s => s.paid).length;
+    const unpaired = soloRegs.filter(s => !s.paired_with).length;
+    document.getElementById('stat-total').textContent      = soloRegs.length;
+    document.getElementById('stat-total-label').textContent = 'Individuals';
+    document.getElementById('stat-paid').textContent       = paid;
+    document.getElementById('stat-unpaid').textContent     = soloRegs.length - paid;
+    document.getElementById('stat-extra').textContent      = unpaired;
+    document.getElementById('stat-extra-label').textContent = 'Unpaired';
+  } else {
+    const paid        = registrations.filter(r => r.paid).length;
+    const totalPlayers = registrations.reduce((s, r) => s + r.players.length, 0);
+    document.getElementById('stat-total').textContent      = registrations.length;
+    document.getElementById('stat-total-label').textContent = 'Teams';
+    document.getElementById('stat-paid').textContent       = paid;
+    document.getElementById('stat-unpaid').textContent     = registrations.length - paid;
+    document.getElementById('stat-extra').textContent      = totalPlayers;
+    document.getElementById('stat-extra-label').textContent = 'Total Players';
+  }
+
+  // Actions bar
+  renderAdminActions(isSolo);
+
+  if (isSolo) renderSoloTable();
+  else renderTable();
+}
+
+function renderAdminActions(isSolo) {
+  const bar = document.getElementById('admin-actions-bar');
+  if (isSolo) {
+    bar.innerHTML = `
+      <button class="btn-admin-danger" onclick="clearAllSolos()">Clear All Individuals</button>
+      <button class="btn-admin-outline" onclick="closeAdmin()">Close</button>`;
+  } else {
+    bar.innerHTML = `
+      <div class="export-group">
+        <span class="export-group-label">SwissSys:</span>
+        <button class="btn-admin btn-admin-blue" onclick="exportSJSON('all')">Export All → SJSON</button>
+        <button class="btn-admin btn-admin-blue" onclick="exportSJSON('paid')">Export Paid → SJSON</button>
+      </div>
+      <div class="export-group">
+        <span class="export-group-label">CSV:</span>
+        <button class="btn-admin btn-admin-gold" onclick="exportCSV('all')">All</button>
+        <button class="btn-admin btn-admin-green" onclick="exportCSV('paid')">Paid Only</button>
+      </div>
+      <button class="btn-admin-danger" onclick="clearAll()">Clear All</button>
+      <button class="btn-admin-outline" onclick="closeAdmin()">Close</button>`;
+  }
+}
+
+// ── Team table ────────────────────────────────────────
 function filteredRegs() {
   if (activeFilter === 'paid')   return registrations.filter(r => r.paid);
   if (activeFilter === 'unpaid') return registrations.filter(r => !r.paid);
@@ -1253,14 +1647,15 @@ function filteredRegs() {
 function renderTable() {
   const noReg = document.getElementById('no-registrations');
   const table = document.getElementById('reg-table');
+  const thead = document.getElementById('reg-thead');
   const tbody = document.getElementById('reg-tbody');
-  const paid  = registrations.filter(r => r.paid).length;
-  const totalPlayers = registrations.reduce((s, r) => s + r.players.length, 0);
+  document.getElementById('pair-action-bar').classList.remove('visible');
 
-  document.getElementById('stat-total').textContent   = registrations.length;
-  document.getElementById('stat-paid').textContent    = paid;
-  document.getElementById('stat-unpaid').textContent  = registrations.length - paid;
-  document.getElementById('stat-players').textContent = totalPlayers;
+  thead.innerHTML = `<tr>
+    <th>#</th><th>Conf #</th><th>Payment</th><th>Team Name</th><th>Section</th>
+    <th>Contact Email</th><th>Phone</th><th>Players &amp; Ratings</th>
+    <th>Prize Categories</th><th>Registered At</th><th></th>
+  </tr>`;
 
   const rows = filteredRegs();
   if (!rows.length) {
@@ -1286,22 +1681,130 @@ function renderTable() {
       <td class="td-team">${escHtml(r.team_name)}</td>
       <td>${escHtml(r.section)}</td>
       <td>${escHtml(r.email)}</td>
-      <td>${escHtml(r.phone) || '<span style="color:var(--gray)">—</span>'}</td>
+      <td>${escHtml(r.phone)||'<span style="color:var(--gray)">—</span>'}</td>
       <td><button class="expand-btn" onclick="togglePlayers(this)">show players ▾</button>
           <div class="players-detail">${playerSummary}</div></td>
-      <td style="white-space:normal;max-width:180px;font-size:0.75rem">${(r.prize_categories && r.prize_categories.length ? r.prize_categories.join(', ') : '<span style="color:var(--gray)">—</span>')}</td>
+      <td style="white-space:normal;max-width:180px;font-size:0.75rem">${r.prize_categories&&r.prize_categories.length?r.prize_categories.join(', '):'<span style="color:var(--gray)">—</span>'}</td>
       <td class="td-dim">${escHtml(r.timestamp)}</td>
-      <td><button class="btn-edit" onclick="openEditModal(${gi})">Edit</button></td>
+      <td><button class="btn-edit" onclick="openTeamEditModal(${gi})">Edit</button></td>
     </tr>`;
   }).join('');
 }
 
-function togglePlayers(btn) {
-  const detail = btn.nextElementSibling;
-  const open = detail.classList.toggle('open');
-  btn.textContent = open ? 'hide players ▴' : 'show players ▾';
+// ── Solo table ────────────────────────────────────────
+function renderSoloTable() {
+  const noReg = document.getElementById('no-registrations');
+  const table = document.getElementById('reg-table');
+  const thead = document.getElementById('reg-thead');
+  const tbody = document.getElementById('reg-tbody');
+
+  thead.innerHTML = `<tr>
+    <th style="width:2rem"></th>
+    <th>#</th><th>Conf #</th><th>Payment</th><th>Name</th>
+    <th>USCF ID</th><th>Quick Rating</th><th>Section</th>
+    <th>Contact Email</th><th>Status</th><th>Registered At</th><th></th>
+  </tr>`;
+
+  if (!soloRegs.length) {
+    noReg.style.display = 'block'; table.style.display = 'none';
+    noReg.textContent = 'No individual registrations yet.';
+    document.getElementById('pair-action-bar').classList.remove('visible');
+    return;
+  }
+  noReg.style.display = 'none'; table.style.display = 'table';
+
+  tbody.innerHTML = soloRegs.map((s, i) => {
+    const paired = !!s.paired_with;
+    const cbDisabled = paired ? 'disabled' : '';
+    const cbChecked  = selectedSolos.has(s.conf) ? 'checked' : '';
+    const ratingStr  = s.rating > 0 ? s.rating + ' Q' : '<span style="color:var(--gray-mid)">Unrated</span>';
+    const statusBadge = paired
+      ? `<span class="badge badge-paired">Paired → ${escHtml(s.paired_with)}</span>`
+      : `<span class="badge badge-unpaired">Seeking Team</span>`;
+    return `<tr class="${paired?'solo-paired':''}">
+      <td><input type="checkbox" class="solo-cb" ${cbChecked} ${cbDisabled} onchange="toggleSoloCb('${s.conf}',this)"></td>
+      <td class="td-dim">${i+1}</td>
+      <td class="td-mono" style="color:var(--white);font-weight:500;letter-spacing:0.1em">${s.conf}</td>
+      <td><span class="paid-toggle ${s.paid?'paid':'unpaid'}" onclick="toggleSoloPaid(${i})" title="Click to toggle">${s.paid?'Paid':'Unpaid'}</span></td>
+      <td class="td-team">${escHtml(s.first_name)} ${escHtml(s.last_name)}</td>
+      <td class="td-mono">${escHtml(s.uscf_id)}</td>
+      <td class="td-mono">${ratingStr}</td>
+      <td>${escHtml(s.section)}</td>
+      <td>${escHtml(s.email)}</td>
+      <td>${statusBadge}</td>
+      <td class="td-dim">${escHtml(s.timestamp)}</td>
+      <td><button class="btn-edit" onclick="openSoloEditModal(${i})">Edit</button></td>
+    </tr>`;
+  }).join('');
+
+  updatePairBar();
 }
 
+function toggleSoloCb(conf, checkbox) {
+  if (checkbox.checked) selectedSolos.add(conf);
+  else selectedSolos.delete(conf);
+  updatePairBar();
+}
+
+function updatePairBar() {
+  const bar     = document.getElementById('pair-action-bar');
+  const names   = document.getElementById('pair-action-names');
+  const warning = document.getElementById('pair-section-warning');
+  const count   = selectedSolos.size;
+
+  if (count === 0 || count > 4) {
+    if (count === 0) bar.classList.remove('visible');
+    else {
+      bar.classList.add('visible');
+      names.textContent = `${count} selected — select exactly 4 to pair`;
+      warning.textContent = '';
+    }
+    document.querySelector('#pair-action-bar .btn-admin-green').disabled = true;
+    return;
+  }
+
+  bar.classList.add('visible');
+  const selected = soloRegs.filter(s => selectedSolos.has(s.conf));
+  const nameList = selected.map(s => s.first_name + ' ' + s.last_name).join(', ');
+  names.textContent = count < 4
+    ? `${nameList} — select ${4 - count} more to pair`
+    : nameList;
+
+  const canPair = count === 4;
+  document.querySelector('#pair-action-bar .btn-admin-green').disabled = !canPair;
+
+  // Section mismatch warning
+  if (canPair) {
+    const sections = [...new Set(selected.map(s => s.section))];
+    warning.textContent = sections.length > 1
+      ? `⚠ Warning: selected players are in different sections (${sections.join(', ')}). Verify before pairing.`
+      : '';
+  } else {
+    warning.textContent = '';
+  }
+}
+
+async function pairSelected() {
+  if (selectedSolos.size !== 4) return;
+  const confs   = [...selectedSolos];
+  const teamName = document.getElementById('pair-team-name').value.trim();
+  showLoading('Creating team...');
+  try {
+    const data = await apiCall({ action: 'pairMemorialSolos', confs, team_name: teamName });
+    if (!data.ok) throw new Error(data.error || 'Pairing failed');
+    toast(`Team "${data.teamName}" created! Conf #${data.teamConf}${data.teamPaid ? ' — Paid' : ' — Unpaid'}`);
+    document.getElementById('pair-team-name').value = '';
+    selectedSolos.clear();
+    await Promise.all([loadRegistrations(), loadSoloRegs()]);
+    renderAdminView();
+  } catch(e) {
+    toast('Error pairing players: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+// ── Paid toggles ──────────────────────────────────────
 async function togglePaid(idx) {
   const conf = registrations[idx].conf;
   const newPaid = !registrations[idx].paid;
@@ -1310,24 +1813,271 @@ async function togglePaid(idx) {
   try {
     await savePaidStatus(conf, newPaid);
   } catch(e) {
-    // Revert on failure
     registrations[idx].paid = !newPaid;
     renderTable();
     toast('Error saving payment status — please try again.');
   }
 }
 
+async function toggleSoloPaid(idx) {
+  const conf = soloRegs[idx].conf;
+  const newPaid = !soloRegs[idx].paid;
+  soloRegs[idx].paid = newPaid;
+  renderSoloTable();
+  try {
+    await saveSoloPaidStatus(conf, newPaid);
+  } catch(e) {
+    soloRegs[idx].paid = !newPaid;
+    renderSoloTable();
+    toast('Error saving payment status — please try again.');
+  }
+}
+
+function togglePlayers(btn) {
+  const detail = btn.nextElementSibling;
+  const open = detail.classList.toggle('open');
+  btn.textContent = open ? 'hide players ▴' : 'show players ▾';
+}
+
+// ── Clear all ─────────────────────────────────────────
 async function clearAll() {
-  if (!confirm('Delete all ' + registrations.length + ' registration(s)? This cannot be undone.')) return;
+  if (!confirm('Delete all ' + registrations.length + ' team registration(s)? This cannot be undone.')) return;
   showLoading('Deleting all registrations...');
   try {
     const data = await apiCall({ action: 'clearAll', tournament: TOURNAMENT_KEY });
     if (!data.ok) throw new Error(data.error || 'Clear failed');
     registrations = [];
-    renderTable();
-    toast('All registrations deleted.');
+    renderAdminView();
+    toast('All team registrations deleted.');
   } catch(e) {
     toast('Error: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+async function clearAllSolos() {
+  if (!confirm('Delete all ' + soloRegs.length + ' individual registration(s)? This cannot be undone.')) return;
+  showLoading('Deleting all individual registrations...');
+  try {
+    const data = await apiCall({ action: 'clearAllMemorialSolos' });
+    if (!data.ok) throw new Error(data.error || 'Clear failed');
+    soloRegs = [];
+    selectedSolos.clear();
+    renderAdminView();
+    toast('All individual registrations deleted.');
+  } catch(e) {
+    toast('Error: ' + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  EDIT MODAL — shared, mode-switched
+// ══════════════════════════════════════════════════════
+function openTeamEditModal(idx) {
+  editIdx  = idx;
+  editMode = 'team';
+  const r   = registrations[idx];
+  const cfg = TOURNAMENT_CONFIG;
+
+  document.getElementById('edit-modal-title').textContent = 'Edit Team Registration';
+  document.getElementById('edit-conf-label').textContent  = 'Conf # ' + r.conf;
+
+  const secOpts = cfg.sections.map(s =>
+    `<option value="${s.name}" ${r.section === s.name ? 'selected' : ''}>${s.name}</option>`).join('');
+
+  const required = r.players.filter(p => !p.alt);
+  const alt = r.players.find(p => p.alt) || {};
+
+  const playerBlocks = required.map(p => `
+    <div class="edit-player-block">
+      <div class="edit-player-label"><div class="board-num">${p.board}</div>Board ${p.board}</div>
+      <div class="edit-grid-4">
+        <div class="edit-field"><label>First Name</label><input type="text" id="edit-p${p.board}-first" value="${escAttr(p.first)}" placeholder="First name"></div>
+        <div class="edit-field"><label>Last Name</label><input type="text" id="edit-p${p.board}-last" value="${escAttr(p.last)}" placeholder="Last name"></div>
+        <div class="edit-field"><label>USCF ID</label><input type="text" id="edit-p${p.board}-uscf" value="${escAttr(p.uscf)}" placeholder="e.g. 12345678" maxlength="10"></div>
+        <div class="edit-field"><label>Quick Rating</label><input type="number" id="edit-p${p.board}-rating" value="${p.rating||''}" placeholder="e.g. 1450" min="100" max="3000"></div>
+      </div>
+    </div>`).join('');
+
+  const prizeValues = ['University Team','High School Team','Middle School Team','Elementary School Team','Primary School Team',"Young'uns",'Mixed Doubles','Female Team','Senior Team','Military Team','Family Team','Parents & Kids'];
+  const prizeGrid = prizeValues.map((pv, i) => `
+    <label class="prize-option" id="edit-prize-${i}" onclick="toggleEditPrize(this)">
+      <input type="checkbox" name="edit_prize_category" value="${escAttr(pv)}">
+      <div class="prize-option-text"><span class="prize-option-name">${escHtml(pv)}</span></div>
+    </label>`).join('');
+
+  document.getElementById('edit-modal-body').innerHTML = `
+    <div class="edit-section-heading">Team Information</div>
+    <div class="edit-grid">
+      <div class="edit-field"><label>Team Name</label><input type="text" id="edit-team-name" value="${escAttr(r.team_name)}"></div>
+      <div class="edit-field"><label>Section</label><select id="edit-section">${secOpts}</select></div>
+      <div class="edit-field"><label>Contact Email</label><input type="email" id="edit-email" value="${escAttr(r.email)}"></div>
+      <div class="edit-field"><label>Contact Phone</label><input type="tel" id="edit-phone" value="${escAttr(r.phone)}"></div>
+    </div>
+    <div class="edit-section-heading">Player Roster</div>
+    ${playerBlocks}
+    <div class="edit-section-heading">Alternate <span style="color:var(--gray-mid);font-size:0.55rem;text-transform:none;font-family:'IBM Plex Sans',sans-serif"> — optional</span></div>
+    <div class="edit-player-block">
+      <div class="edit-grid-4">
+        <div class="edit-field"><label>First Name</label><input type="text" id="edit-alt-first" value="${escAttr(alt.first||'')}"></div>
+        <div class="edit-field"><label>Last Name</label><input type="text" id="edit-alt-last" value="${escAttr(alt.last||'')}"></div>
+        <div class="edit-field"><label>USCF ID</label><input type="text" id="edit-alt-uscf" value="${escAttr(alt.uscf||'')}" maxlength="10"></div>
+        <div class="edit-field"><label>Quick Rating</label><input type="number" id="edit-alt-rating" value="${alt.rating||''}" min="100" max="3000"></div>
+      </div>
+    </div>
+    <div class="edit-section-heading">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;text-transform:none;font-family:'IBM Plex Sans',sans-serif"> — optional</span></div>
+    <div class="prize-category-grid" style="margin-bottom:0.5rem">${prizeGrid}</div>
+  `;
+
+  // Pre-check saved categories
+  const saved = r.prize_categories || [];
+  document.querySelectorAll('input[name="edit_prize_category"]').forEach(cb => {
+    if (saved.includes(cb.value)) { cb.checked = true; cb.closest('.prize-option').classList.add('selected'); }
+  });
+
+  document.getElementById('edit-save-msg').classList.remove('show');
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function openSoloEditModal(idx) {
+  editIdx  = idx;
+  editMode = 'solo';
+  const s   = soloRegs[idx];
+  const cfg = TOURNAMENT_CONFIG;
+
+  document.getElementById('edit-modal-title').textContent = 'Edit Individual Registration';
+  document.getElementById('edit-conf-label').textContent  = 'Conf # ' + s.conf;
+
+  const secOpts = cfg.sections.map(sec =>
+    `<option value="${sec.name}" ${s.section === sec.name ? 'selected' : ''}>${sec.name}</option>`).join('');
+
+  document.getElementById('edit-modal-body').innerHTML = `
+    <div class="edit-section-heading">Player Information</div>
+    <div class="edit-grid">
+      <div class="edit-field"><label>First Name</label><input type="text" id="es-first" value="${escAttr(s.first_name)}"></div>
+      <div class="edit-field"><label>Last Name</label><input type="text" id="es-last" value="${escAttr(s.last_name)}"></div>
+      <div class="edit-field"><label>USCF ID</label><input type="text" id="es-uscf" value="${escAttr(s.uscf_id)}" maxlength="10"></div>
+      <div class="edit-field"><label>Quick Rating</label><input type="number" id="es-rating" value="${s.rating||''}" min="100" max="3000"></div>
+      <div class="edit-field"><label>Section</label><select id="es-section">${secOpts}</select></div>
+      <div class="edit-field"><label>Contact Email</label><input type="email" id="es-email" value="${escAttr(s.email)}"></div>
+      <div class="edit-field"><label>Contact Phone</label><input type="tel" id="es-phone" value="${escAttr(s.phone)}"></div>
+    </div>
+  `;
+
+  document.getElementById('edit-save-msg').classList.remove('show');
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); editIdx = null; }
+
+async function saveCurrentEdit() {
+  if (editIdx === null) return;
+  if (editMode === 'team') await saveTeamEdit();
+  else await saveSoloEdit();
+}
+
+async function deleteCurrentEdit() {
+  if (editIdx === null) return;
+  if (editMode === 'team') await deleteTeamRegistration();
+  else await deleteSoloRegistration();
+}
+
+async function saveTeamEdit() {
+  const r   = registrations[editIdx];
+  const cfg = TOURNAMENT_CONFIG;
+  r.team_name = ev('edit-team-name');
+  r.section   = ev('edit-section');
+  r.email     = ev('edit-email');
+  r.phone     = ev('edit-phone');
+  r.prize_categories = Array.from(document.querySelectorAll('input[name="edit_prize_category"]:checked')).map(cb => cb.value);
+
+  const required = r.players.filter(p => !p.alt);
+  required.forEach(p => {
+    p.first  = ev(`edit-p${p.board}-first`);
+    p.last   = ev(`edit-p${p.board}-last`);
+    p.uscf   = ev(`edit-p${p.board}-uscf`);
+    p.rating = parseInt(ev(`edit-p${p.board}-rating`)) || 0;
+  });
+
+  const altFirst = ev('edit-alt-first'), altLast = ev('edit-alt-last'), altUscf = ev('edit-alt-uscf');
+  const altRating = parseInt(ev('edit-alt-rating')) || 0;
+  const altIdx = r.players.findIndex(p => p.alt);
+  if (altFirst || altLast || altUscf) {
+    const altEntry = { board: cfg.playersPerTeam + 1, first: altFirst, last: altLast, uscf: altUscf, rating: altRating, alt: true };
+    if (altIdx >= 0) r.players[altIdx] = altEntry; else r.players.push(altEntry);
+  } else {
+    if (altIdx >= 0) r.players.splice(altIdx, 1);
+  }
+
+  showLoading('Saving changes...');
+  try {
+    await saveEditToSheet(r);
+    renderAdminView();
+    document.getElementById('edit-save-msg').classList.add('show');
+    setTimeout(() => document.getElementById('edit-save-msg').classList.remove('show'), 2000);
+  } catch(e) {
+    toast('Error saving changes — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function saveSoloEdit() {
+  const s = soloRegs[editIdx];
+  s.first_name = ev('es-first');
+  s.last_name  = ev('es-last');
+  s.uscf_id    = ev('es-uscf');
+  s.rating     = parseInt(ev('es-rating')) || 0;
+  s.section    = ev('es-section');
+  s.email      = ev('es-email');
+  s.phone      = ev('es-phone');
+
+  showLoading('Saving changes...');
+  try {
+    await saveSoloEditToSheet(s);
+    renderAdminView();
+    document.getElementById('edit-save-msg').classList.add('show');
+    setTimeout(() => document.getElementById('edit-save-msg').classList.remove('show'), 2000);
+  } catch(e) {
+    toast('Error saving changes — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function deleteTeamRegistration() {
+  const r = registrations[editIdx];
+  if (!confirm(`Delete team registration for "${r.team_name}" (Conf # ${r.conf})? This cannot be undone.`)) return;
+  showLoading('Deleting...');
+  try {
+    await deleteFromSheet(r.conf);
+    registrations.splice(editIdx, 1);
+    closeEditModal();
+    renderAdminView();
+    toast('Registration deleted.');
+  } catch(e) {
+    toast('Error deleting registration — please try again.');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function deleteSoloRegistration() {
+  const s = soloRegs[editIdx];
+  if (!confirm(`Delete individual registration for "${s.first_name} ${s.last_name}" (Conf # ${s.conf})? This cannot be undone.`)) return;
+  showLoading('Deleting...');
+  try {
+    await deleteSoloFromSheet(s.conf);
+    soloRegs.splice(editIdx, 1);
+    selectedSolos.delete(s.conf);
+    closeEditModal();
+    renderAdminView();
+    toast('Registration deleted.');
+  } catch(e) {
+    toast('Error deleting registration — please try again.');
   } finally {
     hideLoading();
   }
@@ -1339,13 +2089,10 @@ async function clearAll() {
 function exportSJSON(filter) {
   const data = filter === 'paid' ? registrations.filter(r => r.paid) : registrations;
   if (!data.length) { alert('No entries to export.'); return; }
-
   const cfg = TOURNAMENT_CONFIG;
 
   const sections = cfg.sections.map(secCfg => {
     const secRegs = data.filter(r => r.section === secCfg.name);
-
-    // Build team code map: team_name → unique 6-char code
     const teamMap = {};
     secRegs.forEach(r => {
       if (!teamMap[r.team_name]) {
@@ -1358,79 +2105,67 @@ function exportSJSON(filter) {
       }
     });
 
-    // Flatten all players across teams, sorted by team then board order
     const allPlayers = [];
-    secRegs.forEach(r => {
-      r.players.forEach(p => {
-        allPlayers.push({ reg: r, player: p });
-      });
-    });
-    // Sort: required players first (by board), alternates last
+    secRegs.forEach(r => { r.players.forEach(p => { allPlayers.push({ reg: r, player: p }); }); });
     allPlayers.sort((a, b) => {
       if (a.player.alt !== b.player.alt) return a.player.alt ? 1 : -1;
       return a.player.board - b.player.board;
     });
 
     const players = allPlayers.map((item, idx) => ({
-      "Pair number": idx + 1,
-      "Name": item.player.last + ', ' + item.player.first,
-      "ID": item.player.uscf,
-      "Rating": 0,
-      "Sex": "U",
-      "Email": item.reg.email || "",
-      "Phone": item.reg.phone || "",
-      "Team": teamMap[item.reg.team_name],
-      "Board order": item.player.board,
+      "Pair number":    idx + 1,
+      "Name":           item.player.last + ', ' + item.player.first,
+      "ID":             item.player.uscf,
+      "Rating":         0,
+      "Sex":            "U",
+      "Email":          item.reg.email || "",
+      "Phone":          item.reg.phone || "",
+      "Team":           teamMap[item.reg.team_name],
+      "Board order":    item.player.board,
       "Current result": " ",
-      "Results": []
+      "Results":        []
     }));
 
-    // Build Teams array with auto-calculated average rating
-    const teamsArray = Object.entries(teamMap).map(([fullName, code], idx) => {
-      const teamRegs = secRegs.filter(r => r.team_name === fullName);
-      // For team vs team, rating is average of required players
-      // (we don't have ratings here so default to 0 — SwissSys fills in from USCF)
-      return {
-        "Pair number": idx + 1,
-        "Full name": fullName,
-        "Team code": code,
-        "Rating": 0,
-        "Results": []
-      };
-    });
+    const teamsArray = Object.entries(teamMap).map(([fullName, code], idx) => ({
+      "Pair number": idx + 1,
+      "Full name":   fullName,
+      "Team code":   code,
+      "Rating":      0,
+      "Results":     []
+    }));
 
     return {
-      "Section name":         secCfg.name,
-      "Type":                 2,          // 2 = fixed-roster team vs team
-      "Section title":        secCfg.name,
-      "Section time control": "",
-      "Number of players":    players.length,
-      "Number of teams":      teamsArray.length,
-      "Rounds paired":        0,
-      "Rounds played":        0,
-      "Rating to use":        0,  // SwissSys will use player ratings from USCF database update
-      "First board":          secCfg.firstBoard,
-      "Final round":          secCfg.finalRound,
-      "Team cut":             secCfg.teamCut,
-      "Acceleration":         0,
-      "Blitz":                secCfg.blitz,
-      "Pair table items":     0,
+      "Section name":          secCfg.name,
+      "Type":                  2,
+      "Section title":         secCfg.name,
+      "Section time control":  "",
+      "Number of players":     players.length,
+      "Number of teams":       teamsArray.length,
+      "Rounds paired":         0,
+      "Rounds played":         0,
+      "Rating to use":         0,
+      "First board":           secCfg.firstBoard,
+      "Final round":           secCfg.finalRound,
+      "Team cut":              secCfg.teamCut,
+      "Acceleration":          0,
+      "Blitz":                 secCfg.blitz,
+      "Pair table items":      0,
       "Team pair table items": 0,
-      "Players":              players,
-      "Teams":                teamsArray,
-      "Prizes": { "Place prizes": [], "Class prizes": [] },
-      "Ladder": {}
+      "Players":               players,
+      "Teams":                 teamsArray,
+      "Prizes":                { "Place prizes": [], "Class prizes": [] },
+      "Ladder":                {}
     };
   });
 
   const sjson = {
     "Overview": {
-      "Program":         "SwissSys",
-      "Version":         11.46,
+      "Program":          "SwissSys",
+      "Version":          11.46,
       "Tournament title": cfg.name,
-      "Starting date":   cfg.startingDate,
-      "Ending date":     cfg.endingDate,
-      "Trace":           "7.11.0.0.0.0.0.0.0.0."
+      "Starting date":    cfg.startingDate,
+      "Ending date":      cfg.endingDate,
+      "Trace":            "7.11.0.0.0.0.0.0.0.0."
     },
     "Sections": sections
   };
@@ -1439,7 +2174,6 @@ function exportSJSON(filter) {
   const filename = cfg.name.replace(/[^a-zA-Z0-9_\-]/g, '_') + suffix + '_' + isoDate() + '.sjson';
   const raw = JSON.stringify(sjson, null, 2)
     .replace('"Version": 11.46', '"Version": 11.46000000000000085265128291212022304534912109375');
-
   downloadText(raw, filename, 'application/json');
   toast('SJSON exported — open in SwissSys via File → Open');
 }
@@ -1480,281 +2214,6 @@ function exportCSV(filter) {
 }
 
 // ══════════════════════════════════════════════════════
-//  EDIT MODAL
-// ══════════════════════════════════════════════════════
-let editIdx = null; // global index of registration being edited
-
-function openEditModal(idx) {
-  editIdx = idx;
-  const r = registrations[idx];
-  const cfg = TOURNAMENT_CONFIG;
-
-  document.getElementById('edit-conf-label').textContent = 'Conf # ' + r.conf;
-
-  // Build sections options
-  const secOpts = cfg.sections.map(s =>
-    `<option value="${s.name}" ${r.section === s.name ? 'selected' : ''}>${s.name}</option>`
-  ).join('');
-
-  // Build player blocks
-  const required = r.players.filter(p => !p.alt);
-  const alt = r.players.find(p => p.alt) || {};
-
-  const playerBlocks = required.map(p => `
-    <div class="edit-player-block">
-      <div class="edit-player-label">
-        <div class="board-num">${p.board}</div>
-        Board ${p.board}
-      </div>
-      <div class="edit-grid-4">
-        <div class="edit-field">
-          <label>First Name</label>
-          <input type="text" id="edit-p${p.board}-first" value="${escAttr(p.first)}" placeholder="First name">
-        </div>
-        <div class="edit-field">
-          <label>Last Name</label>
-          <input type="text" id="edit-p${p.board}-last" value="${escAttr(p.last)}" placeholder="Last name">
-        </div>
-        <div class="edit-field">
-          <label>USCF ID</label>
-          <input type="text" id="edit-p${p.board}-uscf" value="${escAttr(p.uscf)}" placeholder="e.g. 12345678" maxlength="10">
-        </div>
-        <div class="edit-field">
-          <label>Quick Rating</label>
-          <input type="number" id="edit-p${p.board}-rating" value="${p.rating || ''}" placeholder="e.g. 1450" min="100" max="3000">
-        </div>
-      </div>
-    </div>`).join('');
-
-  const hasAlt = !!(alt.first || alt.last || alt.uscf);
-
-  document.getElementById('edit-modal-body').innerHTML = `
-    <div class="edit-section-heading">Team Information</div>
-    <div class="edit-grid">
-      <div class="edit-field">
-        <label>Team Name</label>
-        <input type="text" id="edit-team-name" value="${escAttr(r.team_name)}" placeholder="Team name">
-      </div>
-      <div class="edit-field">
-        <label>Section</label>
-        <select id="edit-section">${secOpts}</select>
-      </div>
-      <div class="edit-field">
-        <label>Contact Email</label>
-        <input type="email" id="edit-email" value="${escAttr(r.email)}" placeholder="email@example.com">
-      </div>
-      <div class="edit-field">
-        <label>Contact Phone <span class="req">*</span></label>
-        <input type="tel" id="edit-phone" value="${escAttr(r.phone)}" placeholder="(808) 555-0100">
-      </div>
-    </div>
-
-    <div class="edit-section-heading">Player Roster</div>
-    ${playerBlocks}
-
-    <div class="edit-section-heading">Alternate <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
-    <div class="edit-player-block">
-      <div class="edit-grid-4">
-        <div class="edit-field">
-          <label>First Name</label>
-          <input type="text" id="edit-alt-first" value="${escAttr(alt.first||'')}" placeholder="First name">
-        </div>
-        <div class="edit-field">
-          <label>Last Name</label>
-          <input type="text" id="edit-alt-last" value="${escAttr(alt.last||'')}" placeholder="Last name">
-        </div>
-        <div class="edit-field">
-          <label>USCF ID</label>
-          <input type="text" id="edit-alt-uscf" value="${escAttr(alt.uscf||'')}" placeholder="e.g. 12345678" maxlength="10">
-        </div>
-        <div class="edit-field">
-          <label>Quick Rating</label>
-          <input type="number" id="edit-alt-rating" value="${alt.rating||''}" placeholder="e.g. 1450" min="100" max="3000">
-        </div>
-      </div>
-    </div>
-
-    <div class="edit-section-heading">Prize Categories <span style="color:var(--gray-mid);font-size:0.55rem;letter-spacing:0.05em;text-transform:none;font-family:'IBM Plex Sans',sans-serif;font-weight:300"> — optional</span></div>
-    <div class="prize-category-grid" style="margin-bottom:0.5rem">
-      <label class="prize-option" id="edit-prize-0" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="University Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">University Team</span>
-          <span class="prize-option-desc">All players currently enrolled in a graduate or undergraduate program</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-1" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="High School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">High School Team</span>
-          <span class="prize-option-desc">All players in grades 9–12, not necessarily at the same school</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-2" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Middle School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Middle School Team</span>
-          <span class="prize-option-desc">All players in grades 6–8</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-3" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Elementary School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Elementary School Team</span>
-          <span class="prize-option-desc">All players in grades 3–6</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-4" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Primary School Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Primary School Team</span>
-          <span class="prize-option-desc">All players in grades K–3</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-5" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Young\'uns">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Young'uns</span>
-          <span class="prize-option-desc">All players age 6 or younger</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-6" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Mixed Doubles">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Mixed Doubles</span>
-          <span class="prize-option-desc">Two male and two female players</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-7" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Female Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Female Team</span>
-          <span class="prize-option-desc">All female players</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-8" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Senior Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Senior Team</span>
-          <span class="prize-option-desc">All players age 50 or older</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-9" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Military Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Military Team</span>
-          <span class="prize-option-desc">All players must be current or former U.S. armed forces service members</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-10" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Family Team">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Family Team</span>
-          <span class="prize-option-desc">All players must be members of the same family or household</span>
-        </div>
-      </label>
-      <label class="prize-option" id="edit-prize-11" onclick="toggleEditPrize(this)">
-        <input type="checkbox" name="edit-prize_category" value="Parents & Kids">
-        <div class="prize-option-text">
-          <span class="prize-option-name">Parents & Kids</span>
-          <span class="prize-option-desc">Two parents and two children, can be from the same or different families</span>
-        </div>
-      </label>
-    </div>
-    <p class="prize-note">Select all categories this team is eligible for.</p>
-  `;
-
-  // Pre-check any previously selected categories
-  const saved = r.prize_categories || [];
-  document.querySelectorAll('input[name="edit_prize_category"]').forEach(cb => {
-    if (saved.includes(cb.value)) {
-      cb.checked = true;
-      cb.closest('.prize-option').classList.add('selected');
-    }
-  });
-
-  document.getElementById('edit-save-msg').classList.remove('show');
-  document.getElementById('edit-modal').classList.add('open');
-}
-
-function closeEditModal() {
-  document.getElementById('edit-modal').classList.remove('open');
-  editIdx = null;
-}
-
-async function saveEdit() {
-  if (editIdx === null) return;
-  const r = registrations[editIdx];
-  const cfg = TOURNAMENT_CONFIG;
-
-  // Update team fields
-  r.team_name       = ev('edit-team-name');
-  r.section         = ev('edit-section');
-  r.email           = ev('edit-email');
-  r.phone           = ev('edit-phone');
-  r.prize_categories = Array.from(document.querySelectorAll('input[name="edit_prize_category"]:checked'))
-    .map(cb => cb.value);
-
-  // Update required players
-  const required = r.players.filter(p => !p.alt);
-  required.forEach(p => {
-    p.first  = ev(`edit-p${p.board}-first`);
-    p.last   = ev(`edit-p${p.board}-last`);
-    p.uscf   = ev(`edit-p${p.board}-uscf`);
-    p.rating = parseInt(ev(`edit-p${p.board}-rating`)) || 0;
-  });
-
-  // Update or add/remove alternate
-  const altFirst = ev('edit-alt-first');
-  const altLast  = ev('edit-alt-last');
-  const altUscf  = ev('edit-alt-uscf');
-  const altRating = parseInt(ev('edit-alt-rating')) || 0;
-  const altIdx   = r.players.findIndex(p => p.alt);
-
-  if (altFirst || altLast || altUscf) {
-    const altEntry = { board: cfg.playersPerTeam + 1, first: altFirst, last: altLast, uscf: altUscf, rating: altRating, alt: true };
-    if (altIdx >= 0) r.players[altIdx] = altEntry;
-    else r.players.push(altEntry);
-  } else {
-    if (altIdx >= 0) r.players.splice(altIdx, 1);
-  }
-
-  showLoading('Saving changes...');
-  try {
-    await saveEditToSheet(r);
-    renderTable();
-    const msg = document.getElementById('edit-save-msg');
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 2000);
-  } catch(e) {
-    toast('Error saving changes — please try again.');
-  } finally {
-    hideLoading();
-  }
-}
-
-async function deleteRegistration() {
-  if (editIdx === null) return;
-  const r = registrations[editIdx];
-  if (!confirm(`Delete registration for "${r.team_name}" (Conf # ${r.conf})? This cannot be undone.`)) return;
-  showLoading('Deleting...');
-  try {
-    await deleteFromSheet(r.conf);
-    registrations.splice(editIdx, 1);
-    renderTable();
-    closeEditModal();
-    toast('Registration deleted.');
-  } catch(e) {
-    toast('Error deleting registration — please try again.');
-  } finally {
-    hideLoading();
-  }
-}
-
-function ev(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-function escAttr(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ══════════════════════════════════════════════════════
 //  PUBLIC ROSTER
 // ══════════════════════════════════════════════════════
 async function openRoster() {
@@ -1764,37 +2223,25 @@ async function openRoster() {
   hideLoading();
   renderRoster();
 }
-function closeRoster() {
-  document.getElementById('roster-panel').classList.remove('open');
-}
+function closeRoster() { document.getElementById('roster-panel').classList.remove('open'); }
 
 function renderRoster() {
   const grid    = document.getElementById('roster-grid');
   const empty   = document.getElementById('roster-empty');
   const subtitle = document.getElementById('roster-subtitle');
   const count   = registrations.length;
-
   subtitle.textContent = count
     ? count + ' team' + (count === 1 ? '' : 's') + ' registered — ' + TOURNAMENT_CONFIG.displayDate
     : TOURNAMENT_CONFIG.displayDate;
-
-  if (!count) {
-    grid.style.display  = 'none';
-    empty.style.display = 'block';
-    return;
-  }
-  grid.style.display  = 'grid';
-  empty.style.display = 'none';
+  if (!count) { grid.style.display = 'none'; empty.style.display = 'block'; return; }
+  grid.style.display = 'grid'; empty.style.display = 'none';
 
   grid.innerHTML = registrations.map((r, i) => {
     const required = r.players.filter(p => !p.alt);
     const alt      = r.players.find(p => p.alt);
-
-    // Calculate average rating for display
     const ratedPlayers = required.filter(p => p.rating > 0);
     const avgRating = ratedPlayers.length > 0
-      ? Math.round(ratedPlayers.reduce((s, p) => s + p.rating, 0) / ratedPlayers.length)
-      : null;
+      ? Math.round(ratedPlayers.reduce((s, p) => s + p.rating, 0) / ratedPlayers.length) : null;
 
     const playerRows = required.map(p => {
       const name   = escHtml(p.first) + ' ' + escHtml(p.last);
@@ -1803,30 +2250,25 @@ function renderRoster() {
         : `<span class="roster-player-rating unrated">—</span>`;
       return `<div class="roster-player">
         <span class="roster-player-board">Bd ${p.board}</span>
-        <span class="roster-player-name">${name}</span>
-        ${rating}
-      </div>`;
+        <span class="roster-player-name">${name}</span>${rating}</div>`;
     }).join('');
+
+    const altRow = alt ? `<div class="roster-player" style="opacity:0.6">
+      <span class="roster-player-board">Alt</span>
+      <span class="roster-player-name">${escHtml(alt.first)} ${escHtml(alt.last)}</span>
+      <span class="roster-player-rating unrated" style="font-size:0.6rem">alt</span></div>` : '';
 
     const prizeRow = (r.prize_categories && r.prize_categories.length)
       ? `<div style="padding:0.5rem 1rem;border-top:1px solid var(--border)">
            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.3rem">Prize Categories</div>
            <div style="font-size:0.75rem;color:var(--gold);line-height:1.6">${r.prize_categories.join(' · ')}</div>
-         </div>`
-      : '';
-
-    const altRow = alt ? `<div class="roster-player" style="opacity:0.6">
-        <span class="roster-player-board">Alt</span>
-        <span class="roster-player-name">${escHtml(alt.first)} ${escHtml(alt.last)}</span>
-        <span class="roster-player-rating unrated" style="font-size:0.6rem">alt</span>
-      </div>` : '';
+         </div>` : '';
 
     const avgDisplay = avgRating
       ? `<div style="padding:0.5rem 1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
            <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-mid)">Avg Rating</span>
            <span style="font-family:'IBM Plex Mono',monospace;font-size:0.85rem;color:var(--gold)">${avgRating.toLocaleString()} Q</span>
-         </div>`
-      : '';
+         </div>` : '';
 
     return `<div class="roster-card">
       <div class="roster-card-header">
@@ -1836,12 +2278,49 @@ function renderRoster() {
         </div>
         <span class="roster-section-badge">${escHtml(r.section)}</span>
       </div>
-      <div class="roster-card-body">
-        ${playerRows}
-        ${altRow}
-      </div>
-      ${prizeRow}
-      ${avgDisplay}
+      <div class="roster-card-body">${playerRows}${altRow}</div>
+      ${prizeRow}${avgDisplay}
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  PLAYERS SEEKING TEAMS
+// ══════════════════════════════════════════════════════
+async function openSeeking() {
+  document.getElementById('seeking-panel').classList.add('open');
+  showLoading('Loading players seeking teams...');
+  try {
+    await loadSoloRegs();
+  } catch(e) { console.error(e); }
+  hideLoading();
+  renderSeeking();
+}
+function closeSeeking() { document.getElementById('seeking-panel').classList.remove('open'); }
+
+function renderSeeking() {
+  const list    = document.getElementById('seeking-list');
+  const empty   = document.getElementById('seeking-empty');
+  const subtitle = document.getElementById('seeking-subtitle');
+  const unpaired = soloRegs.filter(s => !s.paired_with);
+
+  subtitle.textContent = unpaired.length
+    ? unpaired.length + ' player' + (unpaired.length === 1 ? '' : 's') + ' currently seeking a team'
+    : 'No players currently seeking a team';
+
+  if (!unpaired.length) {
+    list.style.display = 'none'; empty.style.display = 'block'; return;
+  }
+  list.style.display = 'flex'; empty.style.display = 'none';
+
+  list.innerHTML = unpaired.map(s => {
+    const ratingStr = s.rating > 0
+      ? `<span class="seeking-rating">${s.rating} Q</span>`
+      : `<span style="font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--gray-mid)">Unrated</span>`;
+    return `<div class="seeking-card">
+      <span class="seeking-name">${escHtml(s.first_name)} ${escHtml(s.last_name)}</span>
+      ${ratingStr}
+      <span class="seeking-section">${escHtml(s.section)}</span>
     </div>`;
   }).join('');
 }
@@ -1856,12 +2335,12 @@ function genConf() {
   return c;
 }
 function uniqueConf() {
-  const used = new Set(registrations.map(r => r.conf));
+  const used = new Set([...registrations.map(r => r.conf), ...soloRegs.map(s => s.conf)]);
   let c; do { c = genConf(); } while (used.has(c));
   return c;
 }
 function v(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-// save() replaced by Google Sheets backend
+function ev(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
 function downloadText(content, filename, mime) {
   const blob = new Blob([content], { type: mime });
   const url = URL.createObjectURL(blob);
@@ -1872,6 +2351,10 @@ function isoDate() { return new Date().toISOString().slice(0, 10); }
 function escHtml(s) {
   if (s == null || s === '') return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escAttr(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 function csvCell(v) {
   if (v == null || v === '') return '';
